@@ -1,0 +1,25 @@
+/** TbBTGrid 控件*/
+.tbgrid_head_bg tr{
+	font-weight:bold;
+	background-color: #CEDFEF;
+	/* border-bottom:1px solid #c1cdc1; */
+}
+.tbgrid_head_bg tr>td{
+	border-right:1px solid #c1cdc1;
+}
+.tbgrid_body_bg tr{
+	height:30px;
+}
+.tbgrid_body_bg tr:nth-child(2n+0){
+	background-color: rgb(224, 236, 255); 
+}
+.table-striped > tbody > tr:nth-of-type(2n+1){
+	background-color: #e6eeff ; 
+}
+.BTGrid_th_Clike{
+	color : #307ecc !important;
+}
+.tbgrid_body_bg .table-hover > tbody > tr:hover{
+	background-color: #e7fac2; 
+}
+

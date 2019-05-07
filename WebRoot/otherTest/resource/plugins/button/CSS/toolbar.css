@@ -1,0 +1,14 @@
+.toolbar{
+	/*--#CCC*/
+	background-color:#F2F2F2 !important;
+	height: 28px; 
+	border-bottom: rgb(229,229,229) 1px solid;
+}
+.toolButton {
+	border: none;
+	background-color:transparent;
+	vertical-align: middle;
+	text-align:center;
+	margin: 0px;
+	height: 21px;
+}

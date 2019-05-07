@@ -1,0 +1,124 @@
+body{
+	padding:0px;
+	margin:0px;
+	background-image: url("../images/login_bg1.png");
+	background-repeat: repeat-x;
+	background-position: top;
+	background-color: #c0e6fb;
+}
+.login_bg_content{
+	padding:0px;
+	margin:0px;
+	background-image: url("../images/login_bg_colud.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.login-top-area{
+	float:inherit;
+	width:100%;
+}
+.login-middle{
+	float:inherit;
+	width:100%;
+	height:462px;
+}
+.login-bottom-area{
+	width:100%;
+}
+/** content */
+.login-m-left{
+	float:left;
+	height:525px;
+}
+.login-m-right{
+	float:left;
+	height:525px;
+}
+.login-content{
+	float:left;
+	width:982px;
+	height:462px;
+}
+.l-c-body{
+	float:inherit;
+	width:100%;
+	height: 460px;
+}
+
+.l-c-body-left{
+	width: 570px;
+	height: 462px;
+	/* 
+	*商业智能
+	*background-image:url(../images/login_left2.png); 
+	*login_left1 院长决策
+	*/
+	background-image:url(../images/login_left1.png); 
+	float: left;
+}
+.l-c-introduction{
+	width:250px;
+	height:135px;
+	font-size:13px;
+	color: #65808e;
+	padding-left: 15px;
+	line-height: 14px;
+}
+.l-c-body-center{
+	float: left;
+	width: 346px;
+}
+.l-c-body-center-top{
+	height: 84px;
+	width: 346px;
+	background-image: url("../images/login_center_top1.png");
+}
+.l-c-body-center-center{
+	width: 346px;
+	height: 311px;
+	background: #e2f5ff;
+}
+.l-c-body-center-bottom{
+	width: 346px;
+	height: 67px;
+	background-image: url("../images/login_center_bottom1.png");
+}
+.l-c-form{
+	width:270px;
+	font-size:12px;
+	margin: 0;
+	margin-left: 45px;
+	padding-top: 10px;
+}
+.l-form_row{
+	width:100%;
+	height:45px;
+	float:inherit;
+	font-size:13px;
+}
+.l-form-input{
+	border:solid 1px #355f98 !important;
+	height:23px !important;
+	background-color:#FFFFFF !important;
+	line-height: 23px !important;
+}
+.l-form-button{
+	width:82px !important;
+	height:26px !important;
+	background:url(../images/login_btn1.png) no-repeat !important;
+	border: 0px !important;
+}
+.word{
+	float:left;
+	width:52px;
+	height:14px;
+	letter-spacing:1em;
+	margin-right:-1em;
+	margin-top:0.35em;
+}
+.l-c-body-right{
+	width: 66px;
+	height: 462px;
+	float: left;
+	background-image: url("../images/login_right1.png");
+}

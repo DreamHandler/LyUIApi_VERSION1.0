@@ -1,0 +1,22 @@
+body{
+	background-color: #dedede;
+}
+.widget-box{
+	 border-color:rgb(255, 255, 255); 
+	 box-shadow:0px 1px 3px rgba(34, 25, 25,0.2); 
+}
+.widget-header{
+	color:black;border:none;background-color:#fff;padding-left:8px;padding-right:8px;
+}
+.widget-body{
+	padding-left:8px;padding-right:8px;
+}
+strong{
+	font-weight:bold !important;margin-left:3px;
+}
+#time_row{
+	margin-top:5px;background-color:rgb(255, 255, 255);padding-top:7px;padding-bottom: 5px;margin-left:-24px;
+	margin-right:-24px;padding-left:8px;
+	border-color:rgb(255, 255, 255); 
+	box-shadow:0px 1px 3px rgba(34, 25, 25,0.2);
+}

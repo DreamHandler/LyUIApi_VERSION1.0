@@ -1,0 +1,66 @@
+.widget-box>.widget-header{
+	padding-left: 5px;
+}
+.widget-box>.widget-body>.media{
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.l-text{
+	height:30px;
+}
+.datetime-select input[readonly],.datetime-select input{
+	color:#000000 !important;
+	/* border-color:rgb(213,213,213) !important;
+	background-color: rgb(255, 255, 255) !important; */
+}/* 
+.datetime-select input[readonly]:hover{
+	border-color:rgb(181,181,181) !important;
+}
+.datetime-select input[readonly]:focus{
+	color:rgb(105,105,105) !important;
+	border-color:rgb(245,153,66) !important;
+	background-color: rgb(255, 255, 255) !important;
+} */
+.infobox.infobox-green{
+	margin-top: 0px;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1){
+	background-color: #e6eeff; 
+}
+.table-striped > tbody >tr.CW_Clike{
+	background-color: rgb(220, 248, 168) !important;
+}
+.CW_th_Clike{
+	color : #c57810!important;
+}
+.clear{
+	clear: both;
+	width: 100%;
+}
+.widget-toolbar>a>i{
+	font-size: 16px
+}
+.scroll-content > .media{
+	color:#191919;
+}
+.scroll-content > .media a{
+	color:#1260a3;
+}
+.show-word{
+	color:#3c763d;
+}
+.show-warn{
+	color:red;
+}
+.url-word{
+	color:#337ab7;
+	cursor: pointer;
+}
+.url-word:hover, .url-word:focus{
+	color:#23527c;
+	text-decoration:underline;
+}
+h5>i.fa{
+	font-size: 18px;
+}

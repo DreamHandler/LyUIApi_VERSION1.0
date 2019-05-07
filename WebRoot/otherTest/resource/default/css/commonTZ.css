@@ -1,0 +1,118 @@
+#accordion .focus.btn-primary:hover,#accordion .btn-primary:hover:active,#accordion .btn-primary:focus:active,
+#accordion .btn-primary:hover:focus,#accordion .btn-primary:hover{
+	border-color:#d15b47;
+	background-color:rgb(183, 70, 53) !important;
+}
+h5{
+	font-weight:bold;
+	height:29px;
+}
+#accordion .btn{
+	margin-top:10px;
+	min-width: 100px;
+}
+body{
+	background-color: transparent;
+}
+.fa-caret-down{
+	position: absolute;
+	left:50px;
+	top:30px;
+}
+.timeline-dots > li > button {
+	padding-bottom: 6px;
+}
+.nav-bodyaa::before{
+	float:left;
+	width:1px;
+	margin-left:4px;
+	border-top-width:0px;
+	border-right-width:0px;
+	border-bottom-width:0px;
+	border-left-width:0px;
+	display: block;
+	max-width: 1px;
+	content: "";
+	height:49px;
+	background-color: #999;
+}
+.nav-bodyaa-tag::before{
+	float:left;
+	width:3px;
+	margin-left:3px;
+	border-top-width:0px;
+	border-right-width:0px;
+	border-bottom-width:0px;
+	border-left-width:0px;
+	display: block;
+	max-width: 3px;
+	content: "";
+	height:49px;
+	background-color: #459ad3;
+}
+.nav-bodyaa-tag  .nav-mainaa{
+	color:#438eb9;
+}
+.nav-mainaa{
+	color:#999;
+	height:44px;
+	line-height:44px;
+	font-size:14px;
+	font-weight:700;
+	float:left;
+	margin-left:20px;
+	width:110px;
+}
+.nav-bodyaa .nav-mainaa-cir {
+	height:5px;
+	width: 5px;
+	display: block;
+	border-top-width:0px;
+	border-right-width:0px;
+	border-bottom-width:0px;
+	border-left-width:0px;
+	background-color: #999;
+	position: relative;
+	top:23px;
+	left:2px;
+}
+.nav-mainaa-frame{
+	height: 9px;
+	width: 9px;
+	border: 1px solid #999;
+	position: relative;
+	left:0px;
+}
+.nav-bodyaa:hover .nav-mainaa-cir{
+	background-color: #438eb9;
+}
+.nav-bodyaa:hover .nav-mainaa{
+	color:#438eb9;
+}
+.nav-bodyaa,.nav-bodyaa-tag{
+	cursor: pointer;
+}
+#show1:hover{
+	background-color: #e9e9e9;
+}
+.header-text i{
+	margin-left:5px;
+	margin-right:5px;
+}
+.header-text{
+	height:28px;
+	line-height: 28px;
+}
+#show1{
+	padding:5px;border:1px solid #e9e9e9;font-size: 18px;position: absolute;top: 10px;right: 30px;color : #999
+}
+#totality_bar{
+	height:285px;padding:0px;
+}
+#history_course,#history_contrast,#totality_ratio,#totality_rgrid,#totality_grid,#totality_trend,#detail_bar,#detail_ratio,#detail_grid,#detail_trend{
+	height:250px;padding:0px;
+}
+#history_grid{
+	height:550px;padding:0px;
+}
+
