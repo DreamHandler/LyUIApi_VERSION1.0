@@ -19,11 +19,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	
+	<script type="text/javascript">
+		
+	</script>
   </head>
   <script src="UItest/JavaScript/firstpage.js"></script>
   <body>
-    <div>
+    <div style="height:100%;border:1px red solid;">
     	This is my firstpage JSP page. <br>
 		<div style="color:blue">测试文件上传</div>
 	    <input type="button" value="上传文件" id="oldWJ" onclick="firstpage.testUploadFile()" style="width: 80px;float: left;height: 20px;margin-left: 5px;margin-top: 5px;"/>

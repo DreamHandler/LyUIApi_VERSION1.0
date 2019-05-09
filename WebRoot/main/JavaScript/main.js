@@ -47,7 +47,6 @@ var main={
 			 */
 			var temp = $("<li/>");
 			temp.attr("id",li_id)
-//			temp.css("width",main.recent_tab_width)
 			temp.addClass(li_id);
 			var a = $("<a/>");
 			a.attr("data-toggle","tab");
@@ -79,8 +78,8 @@ var main={
 			/**
 			 * 新增一个iframe标签
 			 * <div id="member-tab" class="tab-pane">
-			 * 		<iframe id="iframe_menu04" src="UItest/firstpage.jsp" width="100%" 
-			 * 		allowtransparency="true" onload="changeFrameHeight(this)" 
+			 * 		<iframe id="iframe_menu04" onload="changeFrameHeight(this)"  src="UItest/firstpage.jsp" width="100%" 
+			 * 		allowtransparency="true" 
 			 * 		scrolling="auto" frameborder="0">
 			 * 		</iframe>
 			 * </div>
@@ -90,10 +89,10 @@ var main={
 			iframe_div.attr("id",li_id+"-tab");
 			var new_iframe = $("<iframe/>");
 			new_iframe.attr("id","iframe_"+li_id);
+			new_iframe.attr("onload","changeFrameHeight(this)");
 			new_iframe.attr("src",sender.attr("href"));
 			new_iframe.attr("width","100%");
 			new_iframe.attr("allowtransparency","true");
-			new_iframe.attr("onload","changeFrameHeight(this)");
 			new_iframe.attr("scrolling","auto");
 			new_iframe.attr("frameborder","0");
 			iframe_div.append(new_iframe);
@@ -183,6 +182,7 @@ var main={
 			if(node==null||node.xml===undefined){
 				node = StrToXml(response.responseText);
 			}
+//			alert(node.xml)
 			$("#first-menu").html(node.xml);
 		}
 	},
