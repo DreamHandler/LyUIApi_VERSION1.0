@@ -1,4 +1,12 @@
-
-#Use_system{
-	border:1px red solid;
+#leftDiv{
+	float:left;
+	width:150px;
+	margin:5px;
+	border:0px red solid;
+}
+#group_info{
+	float:left;
+	margin:0px;
+	height:100%;
+	width:100%;
 }

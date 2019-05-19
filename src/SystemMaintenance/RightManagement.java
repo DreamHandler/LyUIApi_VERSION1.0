@@ -52,11 +52,9 @@ public class RightManagement extends Busy{
 	//获取菜单信息
 	public String QryMenuData(Document inEle, Aperator inopr) throws Exception{
 		Element Aele = inEle.getRootElement().element("ASK");
-		String where = "";
+		String VXTBM = Aele.attributeValue("SYSNO");
 		Document doc = null;
-		String SQL = "SELECT ROW_NUMBER() OVER( PARTITION BY A.VascNum ORDER BY A.VascNum) ROWNUMBER,A.VascNum,A.VascName,B.VJOBNUM,B.VUSER,B.VNAME "
-				+ "FROM BASEMENT..TBGROUP A WITH(NOLOCK)"
-				+ "LEFT JOIN BASEMENT..TBUSER B WITH(NOLOCK) ON A.VascNum=B.VascNum";
+		String SQL = "SELECT * FROM BASEMENT..TBMENU WHERE VXTBM='"+VXTBM+"' ORDER BY IZH,IXH";
 		try {
 			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
 		} catch (Exception e) {

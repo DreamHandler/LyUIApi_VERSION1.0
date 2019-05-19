@@ -22,22 +22,30 @@
   
   <body onload="RM.initLoad();">
   	<!-- leftDiv start -->
-  	<div id="leftDiv" style="float:left;width:150px;margin:10px;border:1px red solid;overflow:auto;">
-		<ul id="treeData" class="ztree" style="border:0px blue solid"></ul>
+  	<div id="leftDiv" class="widget-box">
+  		<div id="group_info" class="widget-box">
+			<div class="widget-header">
+				<h4 class="widget-title">管理员组</h4>
+			</div>
+			<div class="widget-body">
+				<div id="nr_tree" class="widget-main" style="padding:0px;overflow:auto;">
+					<ul id="treeData" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
    	</div>
    	<!-- leftDiv end -->
    	<!-- rightDiv start -->
-   	<div id="rightDiv" style="float:left;margin:10px;margin-left:0px;border:1px blue solid;">
+   	<div id="rightDiv" style="float:left;margin:5px;margin-left:0px;border:0px blue solid;">
    		<div id="XTXX" style="height:200px;">
    			<!-- xt_left start -->
    			<div id="xt_left" class="widget-box" style="float:left;margin:0px;border-right:0px;">
 				<div class="widget-header">
-					<h4 class="widget-title">未分配系统</h4>
+					<h4 class="widget-title" style="color:red">未分配系统</h4>
 				</div>
 				<div class="widget-body">
 					<div id="nr_left" class="widget-main" style="padding:0px;overflow:auto;">
-						<select multiple="multiple" size="10" id="noUse_system" style="border:0px;">
-							<option value="option1">Option 1</option>
+						<select multiple="multiple" id="noUse_system" onchange="" style="border:0px;padding:0px;">
 							
 						</select>
 					</div>
@@ -72,11 +80,11 @@
    			<!-- xt_right start -->
    			<div id="xt_right" class="widget-box"  style="float:left;margin:0px;border-left:0px;">
    				<div class="widget-header">
-					<h4 class="widget-title">已分配系统</h4>
+					<h4 class="widget-title" style="color:green">已分配系统</h4>
 				</div>
 				<div class="widget-body" >
 					<div id="nr_right" class="widget-main" style="padding:0px;overflow:auto;">
-						<select multiple="multiple" id="Use_system" style="border:0px;padding:0px;">
+						<select multiple="multiple" id="Use_system" onchange="RM.Use_system_change();" style="border:0px;padding:0px;">
 							
 						</select>
 					</div>
@@ -85,6 +93,19 @@
    			<!-- xt_right end -->
    		</div>
    		<!-- rightDiv end -->
+   		<!-- qx_info start -->
+   		<div id="qx_info" class="widget-box" style="float:left;margin:0px;">
+			<div class="widget-header">
+				<h4 class="widget-title">菜单权限信息</h4>
+			</div>
+			<div class="widget-body">
+				<div id="qx_nr_tree" class="widget-main" style="padding:0px;overflow:auto;">
+					<ul id="qx_treeData" class="ztree"></ul>
+				</div>
+				
+			</div>
+		</div>
+		<!-- qx_info end -->
    	</div>
   </body>
 </html>
