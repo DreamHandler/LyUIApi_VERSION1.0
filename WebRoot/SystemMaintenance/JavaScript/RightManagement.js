@@ -66,8 +66,8 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			        		var id = treeNode["id"];
 			        		//操作员权限
 			        		if(IPARENTID != null && IPARENTID != 0){
-			        			var QryJson={"id":id};
-			        			ajaxCall(QryJson,"SystemMaintenance.RightManagement","QryGroupAndUserData",RM.TreeDataHandler,false);
+			        			var QryJson={"BGROUP":"1","id":id};
+			        			ajaxCall(QryJson,"SystemMaintenance.RightManagement","QrySystemData",RM.SystemDataHandler,false);
 			        		} else {//操作员组权限
 			        			var QryJson={"BGROUP":"1","id":id};
 			        			ajaxCall(QryJson,"SystemMaintenance.RightManagement","QrySystemData",RM.SystemDataHandler,false);
