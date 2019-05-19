@@ -262,7 +262,7 @@ RightManagement.prototype = Object.extend(new TBase(), {
 	},
 	//菜单树 checkbox 选中、取消
 	onCheck : function(){
-		
+		alert(333)
 	}
 });
 var RM = new RightManagement();
