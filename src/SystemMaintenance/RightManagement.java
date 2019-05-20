@@ -46,7 +46,7 @@ public class RightManagement extends Busy{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		System.out.println(document.asXML());
+//		System.out.println(doc.asXML());
 		return doc.asXML();
 	}
 	//获取菜单信息
@@ -55,6 +55,28 @@ public class RightManagement extends Busy{
 		String VXTBM = Aele.attributeValue("SYSNO");
 		Document doc = null;
 		String SQL = "SELECT * FROM BASEMENT..TBMENU WHERE VXTBM='"+VXTBM+"' ORDER BY IZH,IXH";
+		try {
+			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		System.out.println(document.asXML());
+		return doc.asXML();
+	}
+	//获取菜单信息
+	public String QryQX(Document inEle, Aperator inopr) throws Exception{
+		Element Aele = inEle.getRootElement().element("ASK");
+		String VSYSNO = Aele.attributeValue("VSYSNO");
+		String VascNum = Aele.attributeValue("VascNum");
+		String BGROUP = Aele.attributeValue("BGROUP");
+		Document doc = null;
+		String SQL = "";
+		if(!"1".equals(BGROUP)){//管理员组权限
+			SQL = "SELECT * FROM BASEMENT..TBGROUPQX "
+					+ "WHERE VascNum='"+VascNum+"' AND VSYSNO='"+VSYSNO+"'";
+		}else {//管理员权限
+			
+		}
 		try {
 			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
 		} catch (Exception e) {
