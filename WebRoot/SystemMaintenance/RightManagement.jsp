@@ -44,8 +44,8 @@
 					<h4 class="widget-title" style="color:red">未分配系统</h4>
 				</div>
 				<div class="widget-body">
-					<div id="nr_left" class="widget-main" style="padding:0px;overflow:auto;">
-						<select multiple="multiple" id="noUse_system" onchange="" style="border:0px;padding:0px;">
+					<div id="nr_left" class="widget-main">
+						<select multiple="multiple" id="noUse_system" onchange="RM.noUse_system_change();" >
 							
 						</select>
 					</div>
@@ -82,9 +82,9 @@
    				<div class="widget-header">
 					<h4 class="widget-title" style="color:green">已分配系统</h4>
 				</div>
-				<div class="widget-body" >
-					<div id="nr_right" class="widget-main" style="padding:0px;overflow:auto;">
-						<select multiple="multiple" id="Use_system" onchange="RM.Use_system_change();" style="border:0px;padding:0px;">
+				<div class="widget-body">
+					<div id="nr_right" class="widget-main">
+						<select multiple="multiple" id="Use_system" onchange="RM.Use_system_change();" >
 							
 						</select>
 					</div>

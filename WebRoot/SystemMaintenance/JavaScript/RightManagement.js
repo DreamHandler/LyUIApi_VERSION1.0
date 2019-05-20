@@ -59,6 +59,7 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			        callback: {
 //			            beforeExpand:zTreeBeforeExpand, // 用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作
 			        	onClick : function(event, treeId, treeNode, clickFlag){
+			        		RM.toButton_System(0);
 			        		$("#qx_treeData").html("");//将菜单信息赋空
 			        		RM.IPARENTID = treeNode["IPARENTID"]==null?"":treeNode["IPARENTID"];
 			        		RM.id = treeNode["id"];
@@ -85,28 +86,32 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			}
 			var FieldsValue = node.documentElement.selectSingleNode("FieldsValue").childNodes;
 			var noUse_system = "",Use_system = "";
-			var first_Use_system = true;
+			var Use_system_num = 0,noUse_system_num = 0;
 			var Use_system_select = "";
 			for(var i=0;i<FieldsValue.length;i++){
 				var VascNum = FieldsValue[i].getAttribute("VascNum");
 				var VSYSNO = FieldsValue[i].getAttribute("VSYSNO");
 				var VNAME = FieldsValue[i].getAttribute("VNAME");
 				if(VascNum != null && VascNum != ""){
-					if(first_Use_system){
+					if(Use_system_num == 0){
 						Use_system_select = "selected";
-						first_Use_system = false;
 					}else{
 						Use_system_select = "";
 					}
 					Use_system += '<option value="'+VSYSNO+'" '+Use_system_select+'>'+VNAME+'</option>';
+					Use_system_num ++;
 				} else {
 					noUse_system += '<option value="'+VSYSNO+'">'+VNAME+'</option>';
+					noUse_system_num ++;
 				}
 			}
 			$("#noUse_system").html(noUse_system);
 			$("#Use_system").html(Use_system);
-			if(!first_Use_system){
+			if(Use_system_num > 0){
 				RM.Use_system_change();
+			}
+			if(noUse_system_num > 0){
+				RM.toButton_System(3);
 			}
 		}
 	},
@@ -123,7 +128,7 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			if(node==null||node.xml===undefined){
 				node = StrToXml(response.responseText);
 			}
-			var nodeJson = RM.xmlToJson(node);alert(node.xml)
+			var nodeJson = RM.xmlToJson(node);
 			//初始化zTree，三个参数一次分别是容器(zTree 的容器 className 别忘了设置为 "ztree")、参数配置、数据源
 			$.fn.zTree.init($("#treeData"), RM.setting, nodeJson); 
 			var zTree = $.fn.zTree.getZTreeObj("treeData");//获取ztree对象
@@ -176,12 +181,21 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		}
 		return nodeJson;
 	},
+	//未分配系统选中
+	noUse_system_change : function(){
+		RM.toButton_System(1);
+	},
 	//按钮显隐控制 
-	toButton : function(flag){
-		if(flag == 1){
-			$("#btn_right,#btn_left,#btn_right_all,#btn_left_all").each(function(i, n) {n.disabled = false;});
+	toButton_System : function(flag){
+		if(flag == 0){//初始化状态-全部禁用
+			$("#btn_right,#btn_left,#btn_right_all,#btn_left_all").each(function(i, n) {n.disabled = true;});
+		}else if(flag == 1){//选中未分配系统
+			$("#btn_right").each(function(i, n) {n.disabled = false;});
+		}else if (flag == 2){//选中已分配系统
+			$("#btn_left").each(function(i, n) {n.disabled = false;});
+		}else if(flag == 3){//有未分配系统
+			$("#btn_right_all").each(function(i, n) {n.disabled = false;});
 		}
-		
 	},
 	//初始化菜单树形结构
 	initMenuTree : function(){
@@ -224,10 +238,12 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		        }
 		}; 
 	},
+	Use_SYSNO : "",
 	//已分配系统点击
 	Use_system_change : function(){
-		var SYSNO=$("#Use_system").val();
-		var QryJson={"SYSNO":SYSNO};
+		RM.toButton_System(2);
+		RM.Use_SYSNO = $("#Use_system").val();
+		var QryJson={"SYSNO":RM.Use_SYSNO};
 		ajaxCall(QryJson,"SystemMaintenance.RightManagement","QryMenuData",RM.Use_system_change_handler,false);
 	},
 	Use_system_change_handler : function(ajax){
@@ -240,8 +256,32 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			var nodeJson = RM.xmlToJson_Menu(node);
 			//初始化zTree，三个参数一次分别是容器(zTree 的容器 className 别忘了设置为 "ztree")、参数配置、数据源
 			$.fn.zTree.init($("#qx_treeData"), RM.MenuSetting, nodeJson);
-			var zTree = $.fn.zTree.getZTreeObj("qx_treeData");//获取ztree对象
-			zTree.expandAll(true);//展开全部节点
+			RM.menu_zTree = $.fn.zTree.getZTreeObj("qx_treeData");//获取ztree对象
+			RM.menu_zTree.expandAll(true);//展开全部节点
+			RM.getQX();
+		}
+	},
+	//ztree异步获取对应权限
+	getQX : function(){
+		var QryJson={"VSYSNO":RM.Use_SYSNO,"BGROUP":RM.IPARENTID,"VascNum":RM.id};
+		ajaxCall(QryJson,"SystemMaintenance.RightManagement","QryQX",RM.getQX_handler,false);
+	},
+	getQX_handler : function(ajax){
+		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
+			var response = xmlObject;
+			var node = response.responseXML.documentElement;
+			if(node==null||node.xml===undefined){
+				node = StrToXml(response.responseText);
+			}
+			var FieldsValue = node.documentElement.selectSingleNode("FieldsValue").childNodes;
+			if(FieldsValue.length > 0){
+				var VCDBM = FieldsValue[0].getAttribute("VCDBM");
+				var CDBMS = VCDBM.split("|");
+				for(var i=0;i<CDBMS.length;i++){//勾选已分配的菜单
+					var node = RM.menu_zTree.getNodeByParam("VNum",CDBMS[i]);
+                    RM.menu_zTree.checkNode(node, true, false); 
+				}
+			}
 		}
 	},
 	//菜单信息的xml转化为json数据，方便ztree使用，简单数据模式

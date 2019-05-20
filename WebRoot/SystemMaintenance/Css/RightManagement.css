@@ -10,3 +10,12 @@
 	height:100%;
 	width:100%;
 }
+#nr_right,#nr_left{
+	padding:0px;
+	overflow:auto;
+	border:0px blue solid;
+}
+#noUse_system,#Use_system{
+	border:0px red solid;
+	padding:0px;
+}
