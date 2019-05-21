@@ -45,7 +45,7 @@
 				</div>
 				<div class="widget-body">
 					<div id="nr_left" class="widget-main">
-						<select multiple="multiple" id="noUse_system" onchange="RM.noUse_system_change();" >
+						<select multiple="multiple" id="noUse_system" onchange="RM.noUse_system_change(this);" >
 							
 						</select>
 					</div>
@@ -60,16 +60,16 @@
    				<div class="widget-body" >
    					<div id="nr_center" class="widget-header" style="padding:0px;text-align:center;border-bottom:0px;">
    						<div class="btn-group btn-group-vertical" style="padding:0px;margin-top:10px;">
-							<button id="btn_right" class="btn btn-sm btn-primary" type="button" disabled="disabled">
+							<button id="btn_right" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" disabled="disabled">
 								<i class="icon-only ace-icon fa fa-angle-right"></i>
 							</button>
-							<button id="btn_left" class="btn btn-sm btn-primary" type="button" disabled="disabled">
+							<button id="btn_left" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_left()" disabled="disabled">
 								<i class="icon-only ace-icon fa fa-angle-left"></i>
 							</button>
-							<button id="btn_right_all" class="btn btn-sm btn-primary" type="button" disabled="disabled">
+							<button id="btn_right_all" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right_all()" disabled="disabled">
 								<i class="icon-only ace-icon fa fa-angle-double-right"></i>
 							</button>
-							<button id="btn_left_all" class="btn btn-sm btn-primary" type="button" disabled="disabled">
+							<button id="btn_left_all" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_left_all()" disabled="disabled">
 								<i class="icon-only ace-icon fa fa-angle-double-left"></i>
 							</button>
 						</div>
@@ -84,7 +84,7 @@
 				</div>
 				<div class="widget-body">
 					<div id="nr_right" class="widget-main">
-						<select multiple="multiple" id="Use_system" onchange="RM.Use_system_change();" >
+						<select multiple="multiple" id="Use_system" onchange="RM.Use_system_change(this);" >
 							
 						</select>
 					</div>
@@ -99,8 +99,21 @@
 				<h4 class="widget-title">菜单权限信息</h4>
 			</div>
 			<div class="widget-body">
-				<div id="qx_nr_tree" class="widget-main" style="padding:0px;overflow:auto;">
-					<ul id="qx_treeData" class="ztree"></ul>
+				<div id="qx_menu" class="widget-main" style="padding:0px;">
+					<div id="qx_nr_tree" style="float:left;padding:0px;overflow:auto;">
+						<ul id="qx_treeData" class="ztree"></ul>
+					</div>
+					<div id="qx_btn" style="float:left;bottom:0px;border:1px red solid;" align="right">
+						<button id="qx_btn_upd" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" >
+							修改
+						</button>
+						<button id="qx_btn_sav" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" >
+							保存
+						</button>
+						<button id="qx_btn_can" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" >
+							取消
+						</button>
+					</div>
 				</div>
 				
 			</div>

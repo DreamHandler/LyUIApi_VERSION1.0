@@ -26,8 +26,13 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		$("#noUse_system").height($("#nr_left").height());
 		$("#Use_system").height($("#nr_right").height());
 		//菜单权限信息
-		$("#qx_info").width($("#rightDiv").width())
-		$("#qx_nr_tree").height($("#rightDiv").height() - $("#XTXX").height() - 40)
+		$("#qx_info,#qx_menu").width($("#rightDiv").width())
+		$("#qx_nr_tree,#qx_menu").height($("#rightDiv").height() - $("#XTXX").height() - 40)
+		//菜单按钮组
+		$("#qx_btn").width(300);
+		$("#qx_nr_tree").width($("#qx_info").width() - $("#qx_btn").width() - 50);
+		var margin_top = $("#qx_nr_tree").height()
+		$("#qx_btn").css("margin-top",margin_top -50);
 	},
 	//初始化树形结构
 	initTree : function(){
@@ -108,7 +113,7 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			$("#noUse_system").html(noUse_system);
 			$("#Use_system").html(Use_system);
 			if(Use_system_num > 0){
-				RM.Use_system_change();
+				RM.Use_system_change(document.getElementById("Use_system"));
 			}
 			if(noUse_system_num > 0){
 				RM.toButton_System(3);
@@ -182,8 +187,10 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		return nodeJson;
 	},
 	//未分配系统选中
-	noUse_system_change : function(){
+	noUse_system_index : "",
+	noUse_system_change : function(obj){
 		RM.toButton_System(1);
+		RM.noUse_system_index = obj.selectedIndex;
 	},
 	//按钮显隐控制 
 	toButton_System : function(flag){
@@ -240,8 +247,10 @@ RightManagement.prototype = Object.extend(new TBase(), {
 	},
 	Use_SYSNO : "",
 	//已分配系统点击
-	Use_system_change : function(){
+	Use_system_index : "",
+	Use_system_change : function(obj){
 		RM.toButton_System(2);
+		RM.Use_system_index = obj.selectedIndex;
 		RM.Use_SYSNO = $("#Use_system").val();
 		var QryJson={"SYSNO":RM.Use_SYSNO};
 		ajaxCall(QryJson,"SystemMaintenance.RightManagement","QryMenuData",RM.Use_system_change_handler,false);
@@ -282,6 +291,9 @@ RightManagement.prototype = Object.extend(new TBase(), {
                     RM.menu_zTree.checkNode(node, true, false); 
 				}
 			}
+			//设置menu_zTree不可操作
+			var nodes = RM.menu_zTree.getNodes();
+			RM.menu_zTree.setChkDisabled(nodes[0],true,true,true);
 		}
 	},
 	//菜单信息的xml转化为json数据，方便ztree使用，简单数据模式
@@ -303,6 +315,79 @@ RightManagement.prototype = Object.extend(new TBase(), {
 	//菜单树 checkbox 选中、取消
 	onCheck : function(){
 		alert(333)
+	},
+	//系统_按钮组
+	btn_right : function(){
+		var noUse_system_obj = document.getElementById("noUse_system");
+		var value = noUse_system_obj.options[RM.noUse_system_index].value;
+		var text = noUse_system_obj.options[RM.noUse_system_index].text;
+		var new_Use_system_option = new Option(text,value);
+		var Use_system_obj = document.getElementById("Use_system");
+		//添加到已分配系统
+		Use_system_obj.options.add(new_Use_system_option);
+		//删除未分配系统
+		noUse_system_obj.options.remove(RM.noUse_system_index); 
+		$("#btn_right").each(function(i, n) {n.disabled = true;});
+		if(noUse_system_obj.options.length == 0){
+			$("#btn_right_all").each(function(i, n) {n.disabled = true;});
+		}
+		if(Use_system_obj.options.length > 0){
+			$("#btn_left_all").each(function(i, n) {n.disabled = false;});
+		}
+	},
+	btn_left : function(){
+		var Use_system_obj = document.getElementById("Use_system");
+		var value = Use_system_obj.options[RM.Use_system_index].value;
+		var text = Use_system_obj.options[RM.Use_system_index].text;
+		var new_noUse_system_option = new Option(text,value);
+		var noUse_system_obj = document.getElementById("noUse_system");
+		//添加到未分配系统
+		noUse_system_obj.options.add(new_noUse_system_option);
+		//删除已分配系统
+		Use_system_obj.options.remove(RM.Use_system_index); 
+		$("#btn_left").each(function(i, n) {n.disabled = true;});
+		if(Use_system_obj.options.length == 0){
+			$("#btn_left_all").each(function(i, n) {n.disabled = true;});
+		}
+		if(noUse_system_obj.options.length > 0){
+			$("#btn_right_all").each(function(i, n) {n.disabled = false;});
+		}
+	},
+	btn_right_all : function(){
+		var Use_system_obj = document.getElementById("Use_system");
+		var noUse_system_obj = document.getElementById("noUse_system");
+		for(var i=0;i<noUse_system_obj.options.length;i++){
+			var value = noUse_system_obj.options[i].value;
+			var text = noUse_system_obj.options[i].text;
+			var new_Use_system_option = new Option(text,value);
+			//添加到已分配系统
+			Use_system_obj.options.add(new_Use_system_option);
+		}
+		while(noUse_system_obj.options.length>0){
+			//删除未分配系统
+			noUse_system_obj.options.remove(0);
+		}
+		$("#btn_right").each(function(i, n) {n.disabled = true;});
+		$("#btn_right_all").each(function(i, n) {n.disabled = true;});
+		$("#btn_left_all").each(function(i, n) {n.disabled = false;});
+	},
+	btn_left_all : function(){
+		var noUse_system_obj = document.getElementById("noUse_system");
+		var Use_system_obj = document.getElementById("Use_system");
+		for(var i=0;i<Use_system_obj.options.length;i++){
+			var value = Use_system_obj.options[i].value;
+			var text = Use_system_obj.options[i].text;
+			var new_noUse_system_option = new Option(text,value);
+			//添加到未分配系统
+			noUse_system_obj.options.add(new_noUse_system_option);
+		}
+		while(Use_system_obj.options.length>0){
+			//删除已分配系统
+			Use_system_obj.options.remove(0);
+		}
+		$("#btn_left").each(function(i, n) {n.disabled = true;});
+		$("#btn_left_all").each(function(i, n) {n.disabled = true;});
+		$("#btn_right_all").each(function(i, n) {n.disabled = false;});
 	}
 });
 var RM = new RightManagement();
