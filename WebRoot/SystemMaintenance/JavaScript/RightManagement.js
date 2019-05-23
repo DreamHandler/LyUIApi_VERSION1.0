@@ -4,19 +4,27 @@ RightManagement.prototype = Object.extend(new TBase(), {
 	IPARENTID : "",
 	id : "",
 	MenuSetting : {},
-	//初始化
+	/**
+     * 初始化
+     */
 	initLoad : function(){
 		RM.initPage();
 		RM.initMenuTree();
 		RM.initTree();
 	},
-	//初始化页面布局
+	/**
+     * 初始化页面布局
+     */
 	initPage : function(){
 		var Height =$(window).height();
 		var Width =$(window).width();
 		//操作员组信息
 		$("#rightDiv,#leftDiv").height(Height - 45);
-		$("#nr_tree").height($("#leftDiv").height() - 40)
+		$("#group_tree").height($("#leftDiv").height() - 40)
+		$("#nr_tree").height($("#group_tree").height() - 50);
+		$("#nr_tree").width($("#group_tree").width());
+		$("#group_btn").width($("#group_tree").width() - 10);
+		//右边信息
 		$("#rightDiv").width(Width - $("#leftDiv").width() - 17);
 		//系统信息
 		$("#xt_right,#xt_left").width(($("#rightDiv").width() - $("#xt_center").width())/2 - 1);
@@ -34,7 +42,9 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		var margin_top = $("#qx_nr_tree").height()
 		$("#qx_btn").css("margin-top",margin_top -50);
 	},
-	//初始化树形结构
+	/**
+     * 初始化树形结构
+     */
 	initTree : function(){
 		 // zTree 的参数配置，后面详解
 		 RM.setting = {
@@ -62,23 +72,24 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			            }
 			        },
 			        callback: {
-//			            beforeExpand:zTreeBeforeExpand, // 用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作
 			        	onClick : function(event, treeId, treeNode, clickFlag){
 			        		RM.toButton_System(0);
+			        		RM.toButton_qx(0);
 			        		$("#qx_treeData").html("");//将菜单信息赋空
 			        		RM.IPARENTID = treeNode["IPARENTID"]==null?"":treeNode["IPARENTID"];
 			        		RM.id = treeNode["id"];
 			        		//操作员权限
 			        		if(RM.IPARENTID != null && RM.IPARENTID != 0){
-			        			var QryJson={"BGROUP":"1","id":RM.id};
+			        			RM.toButton_Group(1);
+			        			var QryJson={"BGROUP":"0","id":RM.id,"IPARENTID":RM.IPARENTID};
 			        			ajaxCall(QryJson,"SystemMaintenance.RightManagement","QrySystemData",RM.SystemDataHandler,false);
 			        		} else {//操作员组权限
+			        			RM.toButton_Group(0);
 			        			var QryJson={"BGROUP":"1","id":RM.id};
 			        			ajaxCall(QryJson,"SystemMaintenance.RightManagement","QrySystemData",RM.SystemDataHandler,false);
 			        		}
 			        	}
 			        }
-
 		}; 
 		RM.getTreeData();
 	},
@@ -114,18 +125,25 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			$("#Use_system").html(Use_system);
 			if(Use_system_num > 0){
 				RM.Use_system_change(document.getElementById("Use_system"));
+			}else {
+				//控制按钮显隐,无菜单信息
+		        RM.toButton_qx(2);
 			}
 			if(noUse_system_num > 0){
 				RM.toButton_System(3);
 			}
 		}
 	},
-	//获取树形结构数据
+	/**
+     * 管理员组_获取树形结构数据
+     */
 	getTreeData : function(){
 		var QryJson={};
 		ajaxCall(QryJson,"SystemMaintenance.RightManagement","QryGroupAndUserData",RM.TreeDataHandler,false);
 	},
-	//树形结构数据返回捕获
+	/**
+     * 树形结构数据返回捕获
+     */
 	TreeDataHandler : function(ajax){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
 			var response = xmlObject;
@@ -144,7 +162,9 @@ RightManagement.prototype = Object.extend(new TBase(), {
             }
 		}
 	},
-	//将xml转化为json，标准数据模式
+	/**
+     * 将xml转化为json，标准数据模式
+     */
 	first_id : "",
 	xmlToJson : function(node){
 		var FieldsValue = node.documentElement.selectSingleNode("FieldsValue").childNodes;
@@ -186,25 +206,17 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		}
 		return nodeJson;
 	},
-	//未分配系统选中
+	/**
+     * 未分配系统选中
+     */
 	noUse_system_index : "",
 	noUse_system_change : function(obj){
 		RM.toButton_System(1);
 		RM.noUse_system_index = obj.selectedIndex;
 	},
-	//按钮显隐控制 
-	toButton_System : function(flag){
-		if(flag == 0){//初始化状态-全部禁用
-			$("#btn_right,#btn_left,#btn_right_all,#btn_left_all").each(function(i, n) {n.disabled = true;});
-		}else if(flag == 1){//选中未分配系统
-			$("#btn_right").each(function(i, n) {n.disabled = false;});
-		}else if (flag == 2){//选中已分配系统
-			$("#btn_left").each(function(i, n) {n.disabled = false;});
-		}else if(flag == 3){//有未分配系统
-			$("#btn_right_all").each(function(i, n) {n.disabled = false;});
-		}
-	},
-	//初始化菜单树形结构
+	/**
+     * 初始化菜单树形结构
+     */
 	initMenuTree : function(){
 		 // zTree 的参数配置，后面详解
 		 RM.MenuSetting = {
@@ -246,7 +258,9 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		}; 
 	},
 	Use_SYSNO : "",
-	//已分配系统点击
+	/**
+     * 已分配系统点击
+     */
 	Use_system_index : "",
 	Use_system_change : function(obj){
 		RM.toButton_System(2);
@@ -270,7 +284,9 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			RM.getQX();
 		}
 	},
-	//ztree异步获取对应权限
+	/**
+     * ztree异步获取对应权限
+     */
 	getQX : function(){
 		var QryJson={"VSYSNO":RM.Use_SYSNO,"BGROUP":RM.IPARENTID,"VascNum":RM.id};
 		ajaxCall(QryJson,"SystemMaintenance.RightManagement","QryQX",RM.getQX_handler,false);
@@ -285,10 +301,12 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			var FieldsValue = node.documentElement.selectSingleNode("FieldsValue").childNodes;
 			if(FieldsValue.length > 0){
 				var VCDBM = FieldsValue[0].getAttribute("VCDBM");
-				var CDBMS = VCDBM.split("|");
-				for(var i=0;i<CDBMS.length;i++){//勾选已分配的菜单
-					var node = RM.menu_zTree.getNodeByParam("VNum",CDBMS[i]);
-                    RM.menu_zTree.checkNode(node, true, false); 
+				if(VCDBM != ""){
+					var CDBMS = VCDBM.split("|");
+					for(var i=0;i<CDBMS.length;i++){//勾选已分配的菜单
+						var node = RM.menu_zTree.getNodeByParam("VNum",CDBMS[i]);
+	                    RM.menu_zTree.checkNode(node, true, false); 
+					}
 				}
 			}
 			//设置menu_zTree不可操作
@@ -296,7 +314,9 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			RM.menu_zTree.setChkDisabled(nodes[0],true,true,true);
 		}
 	},
-	//菜单信息的xml转化为json数据，方便ztree使用，简单数据模式
+	/**
+     * 菜单信息的xml转化为json数据，方便ztree使用，简单数据模式
+     */
 	xmlToJson_Menu : function(node){
 		var Fields = node.documentElement.selectSingleNode("Fields").childNodes;
 		var FieldsValue = node.documentElement.selectSingleNode("FieldsValue").childNodes;
@@ -312,12 +332,47 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		}
 		return nodeJson;
 	},
-	//菜单树 checkbox 选中、取消
+	/**
+     * 菜单树 checkbox 选中、取消
+     */
 	onCheck : function(){
 		alert(333)
 	},
-	//系统_按钮组
+	/**
+     * 删除第一个节点
+     */
+	removeTree : function(){
+        //获取全部节点数据
+        var nodes = RM.menu_zTree.getNodes();
+        //删除全部节点数据
+        RM.menu_zTree.removeNode(nodes[0]);
+        //控制按钮显隐,无菜单信息
+        RM.toButton_qx(2);
+    },
+    /**
+     * 系统_按钮显隐控制 
+     */
+	toButton_System_flag : 0,
+	toButton_System : function(flag){
+		RM.toButton_System_flag = flag;
+		if(flag == 0){//初始化状态-全部禁用
+			$("#btn_right,#btn_left,#btn_right_all,#btn_left_all").each(function(i, n) {n.disabled = true;});
+		}else if(flag == 1){//选中未分配系统
+			$("#btn_right").each(function(i, n) {n.disabled = false;});
+		}else if (flag == 2){//选中已分配系统
+			$("#btn_left").each(function(i, n) {n.disabled = false;});
+		}else if(flag == 3){//有未分配系统
+			$("#btn_right_all").each(function(i, n) {n.disabled = false;});
+		}
+	},
+	/**
+     * 系统_按钮组
+     */
 	btn_right : function(){
+		if(RM.qx_btn_flag == 1){
+			alert("请先取消或保存菜单权限！")
+			return;
+		}
 		var noUse_system_obj = document.getElementById("noUse_system");
 		var value = noUse_system_obj.options[RM.noUse_system_index].value;
 		var text = noUse_system_obj.options[RM.noUse_system_index].text;
@@ -336,6 +391,10 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		}
 	},
 	btn_left : function(){
+		if(RM.qx_btn_flag == 1){
+			alert("请先取消或保存菜单权限！")
+			return;
+		}
 		var Use_system_obj = document.getElementById("Use_system");
 		var value = Use_system_obj.options[RM.Use_system_index].value;
 		var text = Use_system_obj.options[RM.Use_system_index].text;
@@ -352,8 +411,14 @@ RightManagement.prototype = Object.extend(new TBase(), {
 		if(noUse_system_obj.options.length > 0){
 			$("#btn_right_all").each(function(i, n) {n.disabled = false;});
 		}
+		//删除菜单权限信息
+		RM.removeTree();
 	},
 	btn_right_all : function(){
+		if(RM.qx_btn_flag == 1){
+			alert("请先取消或保存菜单权限！")
+			return;
+		}
 		var Use_system_obj = document.getElementById("Use_system");
 		var noUse_system_obj = document.getElementById("noUse_system");
 		for(var i=0;i<noUse_system_obj.options.length;i++){
@@ -367,11 +432,18 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			//删除未分配系统
 			noUse_system_obj.options.remove(0);
 		}
+		//删除菜单权限信息
+		RM.removeTree();
+		//按钮显隐控制
 		$("#btn_right").each(function(i, n) {n.disabled = true;});
 		$("#btn_right_all").each(function(i, n) {n.disabled = true;});
 		$("#btn_left_all").each(function(i, n) {n.disabled = false;});
 	},
 	btn_left_all : function(){
+		if(RM.qx_btn_flag == 1){
+			alert("请先取消或保存菜单权限！")
+			return;
+		}
 		var noUse_system_obj = document.getElementById("noUse_system");
 		var Use_system_obj = document.getElementById("Use_system");
 		for(var i=0;i<Use_system_obj.options.length;i++){
@@ -385,9 +457,95 @@ RightManagement.prototype = Object.extend(new TBase(), {
 			//删除已分配系统
 			Use_system_obj.options.remove(0);
 		}
+		//按钮显隐控制
 		$("#btn_left").each(function(i, n) {n.disabled = true;});
 		$("#btn_left_all").each(function(i, n) {n.disabled = true;});
 		$("#btn_right_all").each(function(i, n) {n.disabled = false;});
+	},
+	/**
+     * 管理员组_按钮显隐控制 
+     */
+	toButton_Group_flag : 0,
+	toButton_Group : function(flag){
+		RM.toButton_Group_flag = flag;
+		if(flag == 0){//点击管理员组-全部可用
+			$("#group_btn_parent,#group_btn_child,#group_btn_update,#group_btn_delete").each(function(i, n) {n.disabled = false;});
+		}else if(flag == 1){//点击管理员-仅 添加下级 不可用
+			$("#group_btn_parent,#group_btn_update,#group_btn_delete").each(function(i, n) {n.disabled = false;});
+			$("#group_btn_child").each(function(i, n) {n.disabled = true;});
+		}
+	},
+	/**
+     * 管理员组_按钮组
+     */
+	group_btn_parent : function(){
+		
+	},
+	group_btn_child : function(){
+		
+	},
+	group_btn_update : function(){
+		
+	},
+	group_btn_save : function(){
+		
+	},
+	/**
+     * 权限_按钮显隐控制
+     */
+	toButton_qx : function(flag){
+		if(flag == 0){//初始化状态-保存、取消禁用
+			$("#qx_btn_save,#qx_btn_cancel").each(function(i, n) {n.disabled = true;});
+			$("#qx_btn_update").each(function(i, n) {n.disabled = false;});
+		}else if(flag == 1){//点击修改
+			$("#qx_btn_save,#qx_btn_cancel").each(function(i, n) {n.disabled = false;});
+			$("#qx_btn_update").each(function(i, n) {n.disabled = true;});
+		}else if(flag == 2){//无菜单信息
+			$("#qx_btn_update,#qx_btn_save,#qx_btn_cancel").each(function(i, n) {n.disabled = true;});
+		}
+	},
+	/**
+     * 权限_按钮组
+     */
+	qx_btn_flag : 0,
+	qx_btn_update  : function(){
+		RM.qx_btn_flag = 1;
+		RM.toButton_qx(1);
+		//禁用操作员组的按钮组
+		$("#group_btn_parent,#group_btn_child,#group_btn_update,#group_btn_delete").each(function(i, n) {n.disabled = true;});
+		//设置menu_zTree不可操作
+		var nodes = RM.menu_zTree.getNodes();
+		RM.menu_zTree.setChkDisabled(nodes[0],false,true,true);
+	},
+	qx_btn_save  : function(){
+		RM.qx_btn_flag = 0;
+		//获取已分配系统信息
+		var Use_system_options = document.getElementById("Use_system").options;
+		var Use_system_value = "";
+		for(var i=0;i<Use_system_options.length;i++){
+			Use_system_value += Use_system_options[i].value +"|";
+		}
+		Use_system_value = Use_system_value.substring(0,Use_system_value.length-1);
+		//获取所有选中的菜单
+        var checkedNodes = RM.menu_zTree.getCheckedNodes(true);
+		var VCDBM = "";
+		for(var j=0;j<checkedNodes.length;j++){
+			VCDBM += checkedNodes[j].VNum + "|";
+		}
+		VCDBM = VCDBM.substring(0,VCDBM.length-1);
+		var QryJson={"VSYSNO":Use_system_value,"VCDBM":VCDBM,"id":RM.id,"IPARENTID":RM.IPARENTID};
+		ajaxCall(QryJson,"SystemMaintenance.RightManagement","saveQX",RM.qx_btn_saveHandler,false);
+	},
+	qx_btn_saveHandler : function(ajax){
+		
+	},
+	qx_btn_cancel  : function(){
+		RM.qx_btn_flag = 0;
+		RM.toButton_qx(0);
+		RM.toButton_System(RM.toButton_System_flag);
+		RM.toButton_Group(RM.toButton_Group_flag);
+		var nodes = RM.menu_zTree.getNodes();
+		RM.menu_zTree.setChkDisabled(nodes[0],true,true,true);
 	}
 });
 var RM = new RightManagement();

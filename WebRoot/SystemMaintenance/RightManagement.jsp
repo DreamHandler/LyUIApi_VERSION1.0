@@ -28,8 +28,24 @@
 				<h4 class="widget-title">管理员组</h4>
 			</div>
 			<div class="widget-body">
-				<div id="nr_tree" class="widget-main" style="padding:0px;overflow:auto;">
-					<ul id="treeData" class="ztree"></ul>
+				<div id="group_tree" class="widget-main" style="padding:0px;">
+					<div id="nr_tree" style="float:left;padding:0px;overflow:auto;">
+						<ul id="treeData" class="ztree"></ul>
+					</div>
+					<div id="group_btn" style="float:left;bottom:0px;" align="right">
+						<button id="group_btn_parent" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_parent()" >
+							添加同级
+						</button>
+						<button id="group_btn_child" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_child()" >
+							添加下级
+						</button>
+						<button id="group_btn_update" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_update()" >
+							修改
+						</button>
+						<button id="group_btn_delete" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_delete()" >
+							删除
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -103,14 +119,14 @@
 					<div id="qx_nr_tree" style="float:left;padding:0px;overflow:auto;">
 						<ul id="qx_treeData" class="ztree"></ul>
 					</div>
-					<div id="qx_btn" style="float:left;bottom:0px;border:1px red solid;" align="right">
-						<button id="qx_btn_upd" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" >
+					<div id="qx_btn" style="float:left;bottom:0px;" align="right">
+						<button id="qx_btn_update" class="btn btn-sm btn-primary" type="button" onclick="RM.qx_btn_update()" >
 							修改
 						</button>
-						<button id="qx_btn_sav" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" >
+						<button id="qx_btn_save" class="btn btn-sm btn-primary" type="button" onclick="RM.qx_btn_save()" >
 							保存
 						</button>
-						<button id="qx_btn_can" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" >
+						<button id="qx_btn_cancel" class="btn btn-sm btn-primary" type="button" onclick="RM.qx_btn_cancel()" >
 							取消
 						</button>
 					</div>
