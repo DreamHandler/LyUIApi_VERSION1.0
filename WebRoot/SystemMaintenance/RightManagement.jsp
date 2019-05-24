@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 	<script type="text/javascript">
 		InitComprise(ModuleUrl+"Tree/zTree.js");
+		InitComprise(ModuleUrl+"Loading/Loading.js");//Loading.js效果不佳，弹出框效果不好
 		InitComprise("SystemMaintenance/JavaScript/RightManagement.js");
 		InitCompriseCss("SystemMaintenance/Css/RightManagement.css");
 	</script>
@@ -28,23 +29,9 @@
 				<h4 class="widget-title">管理员组</h4>
 			</div>
 			<div class="widget-body">
-				<div id="group_tree" class="widget-main" style="padding:0px;">
-					<div id="nr_tree" style="float:left;padding:0px;overflow:auto;">
+				<div id="group_tree" class="widget-main">
+					<div id="nr_tree">
 						<ul id="treeData" class="ztree"></ul>
-					</div>
-					<div id="group_btn" style="float:left;bottom:0px;" align="right">
-						<button id="group_btn_parent" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_parent()" >
-							添加同级
-						</button>
-						<button id="group_btn_child" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_child()" >
-							添加下级
-						</button>
-						<button id="group_btn_update" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_update()" >
-							修改
-						</button>
-						<button id="group_btn_delete" class="btn btn-sm btn-primary" type="button" onclick="RM.group_btn_delete()" >
-							删除
-						</button>
 					</div>
 				</div>
 			</div>
@@ -52,10 +39,10 @@
    	</div>
    	<!-- leftDiv end -->
    	<!-- rightDiv start -->
-   	<div id="rightDiv" style="float:left;margin:5px;margin-left:0px;border:0px blue solid;">
+   	<div id="rightDiv">
    		<div id="XTXX" style="height:200px;">
    			<!-- xt_left start -->
-   			<div id="xt_left" class="widget-box" style="float:left;margin:0px;border-right:0px;">
+   			<div id="xt_left" class="widget-box">
 				<div class="widget-header">
 					<h4 class="widget-title" style="color:red">未分配系统</h4>
 				</div>
@@ -69,12 +56,12 @@
 			</div>
 			<!-- xt_left end -->
 			<!-- xt_center start -->
-   			<div id="xt_center" class="widget-box" style="float:left;width:60px;margin:0px;border-left:0px;border-right:0px;">
+   			<div id="xt_center" class="widget-box">
    				<div class="widget-header">
    					
    				</div>
    				<div class="widget-body" >
-   					<div id="nr_center" class="widget-header" style="padding:0px;text-align:center;border-bottom:0px;">
+   					<div id="nr_center" class="widget-header">
    						<div class="btn-group btn-group-vertical" style="padding:0px;margin-top:10px;">
 							<button id="btn_right" class="btn btn-sm btn-primary" type="button" onclick="RM.btn_right()" disabled="disabled">
 								<i class="icon-only ace-icon fa fa-angle-right"></i>
@@ -94,7 +81,7 @@
    			</div>
    			<!-- xt_center end -->
    			<!-- xt_right start -->
-   			<div id="xt_right" class="widget-box"  style="float:left;margin:0px;border-left:0px;">
+   			<div id="xt_right" class="widget-box" >
    				<div class="widget-header">
 					<h4 class="widget-title" style="color:green">已分配系统</h4>
 				</div>
@@ -110,16 +97,16 @@
    		</div>
    		<!-- rightDiv end -->
    		<!-- qx_info start -->
-   		<div id="qx_info" class="widget-box" style="float:left;margin:0px;">
+   		<div id="qx_info" class="widget-box" >
 			<div class="widget-header">
 				<h4 class="widget-title">菜单权限信息</h4>
 			</div>
 			<div class="widget-body">
-				<div id="qx_menu" class="widget-main" style="padding:0px;">
-					<div id="qx_nr_tree" style="float:left;padding:0px;overflow:auto;">
+				<div id="qx_menu" class="widget-main">
+					<div id="qx_nr_tree">
 						<ul id="qx_treeData" class="ztree"></ul>
 					</div>
-					<div id="qx_btn" style="float:left;bottom:0px;" align="right">
+					<div id="qx_btn" align="right">
 						<button id="qx_btn_update" class="btn btn-sm btn-primary" type="button" onclick="RM.qx_btn_update()" >
 							修改
 						</button>

@@ -1,6 +1,7 @@
+/* 管理员组 */
 #leftDiv{
 	float:left;
-	width:300px;
+	width:200px;
 	margin:5px;
 	border:0px red solid;
 }
@@ -10,6 +11,29 @@
 	height:100%;
 	width:100%;
 }
+#group_tree{
+	padding:0px;
+}
+#nr_tree{
+	float:left;padding:0px;overflow:auto;
+}
+/* 系统和权限 */
+#rightDiv{
+	float:left;margin:5px;margin-left:0px;border:0px blue solid;
+}
+/* 系统 */
+#xt_left{
+	float:left;margin:0px;border-right:0px;
+}
+#xt_center{
+	float:left;width:60px;margin:0px;border-left:0px;border-right:0px;
+}
+#nr_center{
+	padding:0px;text-align:center;border-bottom:0px;
+}
+#xt_right{
+	float:left;margin:0px;border-left:0px;
+}
 #nr_right,#nr_left{
 	padding:0px;
 	overflow:auto;
@@ -18,4 +42,17 @@
 #noUse_system,#Use_system{
 	border:0px red solid;
 	padding:0px;
+}
+/* 权限 */
+#qx_info{
+	float:left;margin:0px;
+}
+#qx_menu{
+	padding:0px;
+}
+#qx_nr_tree{
+	float:left;padding:0px;overflow:auto;
+}
+#qx_btn{
+	float:left;bottom:0px;
 }

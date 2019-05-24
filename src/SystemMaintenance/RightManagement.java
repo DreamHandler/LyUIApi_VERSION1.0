@@ -125,23 +125,62 @@ public class RightManagement extends Busy{
 	 */
 	public String saveQX(Document inEle, Aperator inopr) throws Exception{
 		Element Aele = inEle.getRootElement().element("ASK");
-		String VSYSNO = Aele.attributeValue("VSYSNO");
-		String VascNum = Aele.attributeValue("VascNum");
-		String BGROUP = Aele.attributeValue("BGROUP");
+		String use_system_add = Aele.attributeValue("use_system_add");
+		String noUse_system_add = Aele.attributeValue("noUse_system_add");
+		String Use_SYSNO = Aele.attributeValue("Use_SYSNO");
+		String VCDBM = Aele.attributeValue("VCDBM");
+		String id = Aele.attributeValue("id");
+		String IPARENTID = Aele.attributeValue("IPARENTID");
 		Document doc = null;
-		String SQL = "";
-		if("0".equals(BGROUP) || "".equals(BGROUP) || BGROUP == null){//管理员组权限
-			SQL = "SELECT * FROM BASEMENT..TBGROUPQX "
-					+ "WHERE VascNum='"+VascNum+"' AND VSYSNO='"+VSYSNO+"'";
-		}else {//管理员权限
-			SQL = "SELECT * FROM BASEMENT..TBUSERQX "
-					+ "WHERE VascNum='"+BGROUP+"' AND VSYSNO='"+VSYSNO+"' AND VJOBNUM='"+VascNum+"'";
-		}
-		try {
-			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return doc.asXML();
+	    String SQL = "";
+	    try {
+	    	if("0".equals(IPARENTID)){
+	    		//删除该管理员组-未分配系统的权限信息
+	    		SQL += " DELETE BASEMENT..TBGROUPQX WHERE VascNum='"+id+"' "
+	    			 + " AND VSYSNO IN ('"+noUse_system_add.replace("|", "','")+"')";
+	    		//判断新增该管理员组-已分配系统的权限信息
+	    		if(use_system_add.indexOf("|")>-1){
+	    			String[] use_system_adds = use_system_add.split("\\|");
+	    			for(int i=0;i<use_system_adds.length;i++){
+	    				String sysno = use_system_adds[i];
+	    				SQL += "IF NOT EXISTS(SELECT * FROM BASEMENT..TBGROUPQX WHERE VascNum='"+id+"' AND VSYSNO='"+sysno+"')"
+	    					 + " INSERT INTO BASEMENT..TBGROUPQX(VascNum,VSYSNO) "
+	    					 + " VALUES('"+id+"','"+sysno+"')";
+		    		}
+	    		}
+	    		//判断已选中的系统
+	    		SQL += " IF NOT EXISTS(SELECT * FROM BASEMENT..TBGROUPQX WHERE VascNum='"+id+"' AND VSYSNO='"+Use_SYSNO+"')"
+					 + " INSERT INTO BASEMENT..TBGROUPQX(VascNum,VSYSNO,VCDBM) "
+					 + " VALUES('"+id+"','"+Use_SYSNO+"','"+VCDBM+"')"
+					 + " ELSE UPDATE BASEMENT..TBGROUPQX SET VCDBM='"+VCDBM+"' "
+					 + " WHERE VascNum='"+id+"' AND VSYSNO='"+Use_SYSNO+"'";
+	    	}else {
+	    		//删除该管理员-未分配系统的权限信息
+	    		SQL += " DELETE BASEMENT..TBUSERQX WHERE VJOBNUM='"+id+"' AND VascNum='"+IPARENTID+"'"
+	    			 + " AND VSYSNO IN ('"+noUse_system_add.replace("|", "','")+"')";
+	    		//判断新增该管理员-已分配系统的权限信息
+	    		if(use_system_add.indexOf("|")>-1){
+	    			String[] use_system_adds = use_system_add.split("\\|");
+	    			for(int i=0;i<use_system_adds.length;i++){
+	    				String sysno = use_system_adds[i];
+	    				SQL += "IF NOT EXISTS(SELECT * FROM BASEMENT..TBUSERQX "
+	    					 + " WHERE VJOBNUM='"+id+"' AND VascNum='"+IPARENTID+"' AND VSYSNO='"+sysno+"')"
+	    					 + " INSERT INTO BASEMENT..TBUSERQX(VJOBNUM,VascNum,VSYSNO) "
+	    					 + " VALUES('"+id+"','"+IPARENTID+"','"+sysno+"')";
+		    		}
+	    		}
+	    		//判断已选中的系统
+	    		SQL += " IF NOT EXISTS(SELECT * FROM BASEMENT..TBUSERQX "
+	    			 + " WHERE VJOBNUM='"+id+"' AND VascNum='"+IPARENTID+"' AND VSYSNO='"+Use_SYSNO+"')"
+					 + " INSERT INTO BASEMENT..TBUSERQX(VJOBNUM,VascNum,VSYSNO,VCDBM) "
+					 + " VALUES('"+id+"','"+IPARENTID+"','"+Use_SYSNO+"','"+VCDBM+"')"
+					 + " ELSE UPDATE BASEMENT..TBUSERQX SET VCDBM='"+VCDBM+"' "
+					 + " WHERE VJOBNUM='"+id+"' AND VascNum='"+IPARENTID+"' AND VSYSNO='"+Use_SYSNO+"'";
+	    	}
+	    	doc = ServireSQL(BaseServire.SysModify, SQL, null, inopr);
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    return doc.asXML();
 	}
 }

@@ -1,5 +1,5 @@
 var EpBoxTest = Class.create();
-EpBoxTest.prototype = Object.extend(new TBase(), {
+EpBoxTest.prototype = Object.extend(new LBase(), {
 	//初始化
 	initLoad : function(){
 		ep.LoadData();
