@@ -93,7 +93,7 @@ var main={
 			new_iframe.attr("src",sender.attr("href"));
 			new_iframe.attr("width","100%");
 			//将首页的高度赋值给新增的 iframe
-			new_iframe.attr("height",$("#menu_iframe").height());
+			new_iframe.attr("height",$("#menu_iframe").height() - 5);
 			new_iframe.attr("allowtransparency","true");
 			new_iframe.attr("scrolling","auto");
 			new_iframe.attr("frameborder","0");
