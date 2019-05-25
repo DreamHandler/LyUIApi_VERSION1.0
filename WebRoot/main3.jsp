@@ -38,12 +38,6 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 					$(mainmenu).css('max-height',(bHeight-20)+'px')
 				}catch(ex){}
 			 }
-			 function onteFn(){
-				$('#iframe_menu02').contents().scroll(function(){
-					var top = $('#iframe_menu02').contents().scrollTop();
-					$('#mainmenu').css({'top':' -'+top+'px'});
-				})
-			 } 
 			 window.onresize = function(){//页面收缩时调用
 				changeFrameHeight(document.getElementById("iframe_menu02"));
 				var iframe = document.getElementById("iframe_menu02");
@@ -289,13 +283,13 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 							</li>
 						</ul>
 
-						<div class="tab-content" id="menu_iframe" style="padding:0px;">
+						<div class="tab-content" id="menu_iframe" style="padding:0px;border:1px red solid">
 							<div id="li_menu02-tab" class="tab-pane active">
 								<!-- <iframe id="iframe_menu02" src="UItest/firstpage.jsp" width="100%"
 								allowtransparency="true" onload="changeFrameHeight(this)" 
 								 scrolling="auto" frameborder="0">
 								</iframe> -->
-								<iframe id="iframe_menu02" src="SystemMaintenance/RightManagement.jsp" width="100%"
+								<iframe id="iframe_menu02" src="SystemMaintenance/Group_User.jsp" width="100%"
 								allowtransparency="true" onload="changeFrameHeight(this)" 
 								 scrolling="auto" frameborder="0">
 								</iframe>

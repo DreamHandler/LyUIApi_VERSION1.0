@@ -1,0 +1,12 @@
+/* 主体 */
+#content{
+	padding:0px;border:1px red solid
+}
+/* 管理员组 */
+#group_div{
+	width:200px;
+	padding:0px;margin:5px;border:1px blue solid
+}
+#group_grid {
+	padding:0px
+}

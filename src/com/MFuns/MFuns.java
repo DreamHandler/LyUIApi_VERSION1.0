@@ -117,15 +117,6 @@ public class MFuns
 		  return;
 	  }
 	  for (Element child : childs) {
-//		  Element a = child.element("a");
-//		  Element span = a.element("span");
-//		  Element spanDiv = span.addElement("div");
-//		  spanDiv.addAttribute("style", "height:100%;width:100%;position:absolute;left:3px;top:-1px;z-index:-1;");
-//		  Element spanIframe = spanDiv.addElement("iframe");
-//		  spanIframe.setText(" ");
-//		  spanIframe.addAttribute("style", "height:41px;width:100%;");
-//		  spanIframe.addAttribute("frameborder", "0");
-
 		  Element ul = child.element("ul");
 		  if (ul == null)
 		  {
