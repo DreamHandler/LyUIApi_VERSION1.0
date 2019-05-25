@@ -12,7 +12,7 @@ Group_User.prototype = Object.extend(new LBase(), {
 	initPage : function(){
 		var Height =$(window).height();
 		var Width =$(window).width();
-		$("#content").height(Height - 2)
+		$("#content").height(Height - 35)
 		//操作员组信息
 		$("#group_div").height($("#content").height() - 10)
 		$("#group_grid").height($("#group_div").height() - 40)

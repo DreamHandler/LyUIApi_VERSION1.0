@@ -116,7 +116,7 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 				</button>
 				
 				<div class="navbar-header pull-left" style="padding-top:10px;">
-					<a href="main.jsp" class="navbar-brand" style="font-size:55px;padding-right:0px;padding-left:0px;">
+					<a href="#" class="navbar-brand" style="font-size:55px;padding-right:0px;padding-left:0px;">
 						<strong>
 							<!-- <img src='resource/default/images/logo.png' style='height:25px;padding-bottom: 5px'> -->
 							<i class="fa fa-leaf"></i>
@@ -283,7 +283,7 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 							</li>
 						</ul>
 
-						<div class="tab-content" id="menu_iframe" style="padding:0px;border:1px red solid">
+						<div class="tab-content" id="menu_iframe" style="padding:0px;border:0px red solid">
 							<div id="li_menu02-tab" class="tab-pane active">
 								<!-- <iframe id="iframe_menu02" src="UItest/firstpage.jsp" width="100%"
 								allowtransparency="true" onload="changeFrameHeight(this)" 

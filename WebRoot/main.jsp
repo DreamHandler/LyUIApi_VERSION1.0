@@ -13,18 +13,18 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 	<head>
 		<title>bootstrap  UI 测试</title>
 		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="/LyUI/plugins/bootstrap/css/bootstrap.css" />
-		<link rel="stylesheet" href="/LyUI/plugins/bootstrap/font-awesome/4.5.0/css/font-awesome.css" />
+		<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/font-awesome/4.5.0/css/font-awesome.css" />
 		<!-- text fonts -->
-		<link rel="stylesheet" href="/LyUI/plugins/bootstrap/css/fonts.googleapis.com.css" />
-		<link rel="stylesheet" href="/LyUI/plugins/bootstrap/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/fonts.googleapis.com.css" />
+		<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<!-- 背景切换样式 -->
-		<link rel="stylesheet" href="/LyUI/plugins/bootstrap/css/ace-skins.css" />
-		<link rel="stylesheet" href="/LyUI/plugins/bootstrap/css/ace-rtl.css" />
+		<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace-skins.css" />
+		<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace-rtl.css" />
 		<!-- basic scripts -->
-		<script src="/LyUI/plugins/jQuery/jquery-2.1.4.js"></script>
+		<script src="/LyUI/Origin/jQuery/jquery-2.1.4.js"></script>
 		<!-- ace settings handler -->
-		<script src="/LyUI/plugins/bootstrap/js/ace-extra.js"></script>
+		<script src="/LyUI/Origin/Widget/bootstrap/js/ace-extra.js"></script>
 		<script src="main/JavaScript/main.js"></script>
 		<script type="text/javascript">
 			function changeFrameHeight(){//自动调整iframe页面尺寸
@@ -96,7 +96,7 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 					<ul class="nav ace-nav">
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="/LyUI/Origin/Widget/bootstrap/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<%
 										if(apr == null){
@@ -249,11 +249,11 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 		</div><!-- /.main-container -->
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) 
-				document.write("<script src='/LyUI/plugins/bootstrap/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+				document.write("<script src='/LyUI/Origin/Widget/bootstrap/js/jquery.mobile.custom.js'>"+"<"+"/script>");
 		</script>
-		<script src="/LyUI/plugins/bootstrap/js/bootstrap.js"></script>
-		<script src="/LyUI/plugins/bootstrap/js/ace-elements.js"></script>
-		<script src="/LyUI/plugins/bootstrap/js/ace.js"></script>
+		<script src="/LyUI/Origin/Widget/bootstrap/js/bootstrap.js"></script>
+		<script src="/LyUI/Origin/Widget/bootstrap/js/ace-elements.js"></script>
+		<script src="/LyUI/Origin/Widget/bootstrap/js/ace.js"></script>
 	</body>
 </html>
 
