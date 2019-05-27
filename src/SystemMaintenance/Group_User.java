@@ -22,7 +22,25 @@ public class Group_User extends Busy{
 	 */
 	public String QryGroupData(Document inEle, Aperator inopr) throws Exception{
 		Document doc = null;
-		String SQL = "";
+		String SQL = "SELECT VascNum,VascName FROM BASEMENT..TBGROUP WITH(NOLOCK) ORDER BY VascNum";
+		try {
+			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return doc.asXML();
+	}
+	/**
+	 * 获取操作员信息
+	 * @param inEle
+	 * @param inopr
+	 * @return
+	 * @throws Exception
+	 */
+	public String QryAdminData(Document inEle, Aperator inopr) throws Exception{
+		Document doc = null;
+		String SQL = "SELECT VJOBNUM,VUSER,VPSWD,VNAME,VascNum,VascName,VascCpyNum,VascCpyName,VLEVEL,VBZ "
+				+ " FROM BASEMENT..TBUSER WITH(NOLOCK)";
 		try {
 			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
 		} catch (Exception e) {

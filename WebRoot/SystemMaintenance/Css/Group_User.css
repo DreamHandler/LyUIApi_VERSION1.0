@@ -1,12 +1,33 @@
 /* 主体 */
 #content{
-	padding:0px;border:1px red solid
+	padding:0px;border:0px red solid
 }
 /* 管理员组 */
 #group_div{
-	width:200px;
+	float:left;
+	width:35%;
 	padding:0px;margin:5px;border:0px blue solid
 }
 #group_grid {
+	padding:0px
+}
+#nr_grid{
+	float:left;margin:5px;
+}
+#group_qry{
+	height:25px;
+}
+#group_grid_data{
+	border:1px rgb(225, 225, 225) solid;margin-top:5px;
+}
+
+/* 管理员 */
+#admin_div{
+	float:left;
+	padding:0px;
+	margin:5px;
+	margin-left:0px;
+}
+#admin_grid {
 	padding:0px
 }

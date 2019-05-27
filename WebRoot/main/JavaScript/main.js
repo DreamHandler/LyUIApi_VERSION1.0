@@ -54,12 +54,13 @@ var main={
 			a.text(menu_name[menu_name.length-1]);
 			//关闭
 			/**
-			 * <i id="close_menu02" class="ace-icon glyphicon glyphicon-remove close_li_iframe" 
+			 * <i id="close_menu02" title="关闭菜单" class="ace-icon glyphicon glyphicon-remove close_li_iframe" 
 			 * onclick="main.close(this)" >
 			 * </i>
 			 */
 			var close_I = $("<i/>")
 			close_I.attr("id","close_"+li_id.substring(3));
+			close_I.attr("title","关闭菜单");
 			close_I.addClass("ace-icon");
 			close_I.addClass("glyphicon");
 			close_I.addClass("glyphicon-remove");
