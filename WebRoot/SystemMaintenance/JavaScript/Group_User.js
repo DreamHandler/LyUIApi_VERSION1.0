@@ -12,25 +12,25 @@ Group_User.prototype = Object.extend(new LBase(), {
 	initPage : function(){
 		var Height =$(window).height();
 		var Width =$(window).width();
-		$("#content").height(Height - 35)
+		$("#content").height(Height - 5);
 		//操作员组信息
-		$("#group_div").height($("#content").height() - 10)
-		$("#group_grid").height($("#group_div").height() - 35)
-		$("#nr_grid,#group_btn").width($("#group_grid").width() - 10)
-		$("#group_qry,#group_grid_data,#group_grid_input").width($("#nr_grid").width())
-		$("#group_list").width($("#group_grid_data").width())
-		$("#nr_grid").height($("#group_grid").height() - $("#group_btn").height() - 15)
-		$("#group_grid_data").height(($("#nr_grid").height() - $("#group_qry").height())/3*2)
-		$("#group_grid_input").height($("#nr_grid").height() - $("#group_qry").height() - $("#group_grid_data").height() - 15)
+		$("#group_div").height($("#content").height() - 10);
+		$("#group_grid").height($("#group_div").height() - 35);
+		$("#nr_grid,#group_btn").width($("#group_grid").width() - 10);
+		$("#group_qry,#group_grid_data,#group_grid_input").width($("#nr_grid").width());
+		$("#nr_grid").height($("#group_grid").height() - $("#group_btn").height() - 15);
+		$("#group_grid_data").height(($("#nr_grid").height() - $("#group_qry").height())/3*2);
+		$("#group_grid_input").height($("#nr_grid").height() - $("#group_qry").height() - $("#group_grid_data").height() - 15);
 		GU.initGroupGrid();
 		//管理员信息
-		$("#admin_div").width($("#content").width() - $("#group_div").width() - 30)
-		$("#admin_div").height($("#content").height() - 10)
-		$("#admin_grid").height($("#admin_div").height() - 35)
-		$("#admin_nr_grid,#admin_btn").width($("#admin_grid").width() - 10)
-		$("#admin_qry,#admin_grid_data,#admin_grid_input").width($("#admin_nr_grid").width() - 10)
-		$("#admin_nr_grid").height($("#admin_grid").height() - $("#admin_btn").height() - 15)
-		$("#admin_grid_data,#admin_grid_input").height(($("#admin_nr_grid").height() - $("#admin_qry").height())/2 - 5)
+		$("#admin_div").width($("#content").width() - $("#group_div").width() - 15);
+		$("#admin_div").height($("#content").height() - 10);
+		$("#admin_grid").height($("#admin_div").height() - 35);
+		$("#admin_nr_grid,#admin_btn").width($("#admin_grid").width() - 10);
+		$("#admin_qry,#admin_grid_data,#admin_grid_input").width($("#admin_nr_grid").width() - 5);
+		$("#admin_nr_grid").height($("#admin_grid").height() - $("#admin_btn").height() - 15);
+		$("#admin_grid_data,#admin_grid_input").height(($("#admin_nr_grid").height() - $("#admin_qry").height())/2 - 5);
+		
 		GU.initAdminGrid();
 	},
 	/**
@@ -52,6 +52,24 @@ Group_User.prototype = Object.extend(new LBase(), {
 		GU.QryGroupData();
 	},
 	/**
+     * 查询管理员组信息
+     */
+	QryGroupData : function(){
+		var QryJson={};
+		ajaxCall(QryJson,"SystemMaintenance.Group_User","QryGroupData",GU.QryGroupDataHandler,false);
+	},
+	QryGroupDataHandler : function(ajax){
+		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
+			var response = xmlObject;
+			var node = response.responseXML.documentElement;
+			if(node==null||node.xml===undefined){
+				node = StrToXml(response.responseText);
+			}
+			var nodeJson = XmlToJson(node);
+			$("#group_list").jqGrid('setGridParam',{data:nodeJson}).trigger("reloadGrid");
+		}
+	},
+	/**
 	 * 初始化管理员grid
 	 */
 	admin_grid : null,
@@ -69,24 +87,6 @@ Group_User.prototype = Object.extend(new LBase(), {
 			]
 		});
 		GU.QryAdminData();
-	},
-	/**
-     * 查询管理员组信息
-     */
-	QryGroupData : function(){
-		var QryJson={};
-		ajaxCall(QryJson,"SystemMaintenance.Group_User","QryGroupData",GU.QryGroupDataHandler,false);
-	},
-	QryGroupDataHandler : function(ajax){
-		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
-			var response = xmlObject;
-			var node = response.responseXML.documentElement;
-			if(node==null||node.xml===undefined){
-				node = StrToXml(response.responseText);
-			}
-			var nodeJson = XmlToJson(node);
-			$("#group_list").jqGrid('setGridParam',{data:nodeJson}).trigger("reloadGrid");
-		}
 	},
 	/**
      * 查询管理员信息

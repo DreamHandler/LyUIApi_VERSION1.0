@@ -16,17 +16,19 @@ RightManagement.prototype = Object.extend(new LBase(), {
 	initPage : function(){
 		var Height =$(window).height();
 		var Width =$(window).width();
+		$("#content").height(Height - 5);
 		//操作员组信息
-		$("#rightDiv,#leftDiv").height(Height - 45);
-		$("#group_tree,#nr_tree").height($("#leftDiv").height() - 40)
+		$("#leftDiv").height($("#content").height() - 10);
+		$("#group_tree,#nr_tree").height($("#leftDiv").height() - 35)
 		$("#nr_tree").width($("#group_tree").width());
 		//右边信息
-		$("#rightDiv").width(Width - $("#leftDiv").width() - 17);
+		$("#rightDiv").width(Width - $("#leftDiv").width() - 15);
 		//系统信息
+		$("#rightDiv").height($("#content").height() - 15);
 		$("#xt_right,#xt_left").width(($("#rightDiv").width() - $("#xt_center").width())/2 - 1);
 		$("#noUse_system").width($("#xt_left").width() - 1);
 		$("#Use_system").width($("#xt_right").width() - 1);
-		$("#nr_left,#nr_right,#nr_center").height($("#XTXX").height() - 45);
+		$("#nr_left,#nr_right,#nr_center").height($("#XTXX").height() - 30);
 		$("#noUse_system").height($("#nr_left").height());
 		$("#Use_system").height($("#nr_right").height());
 		//菜单权限信息

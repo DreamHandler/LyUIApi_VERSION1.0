@@ -24,7 +24,7 @@
   </head>
   
   <body onload="GU.initLoad();">
-  	<div id="content" class="container-fluid">
+  	<div id="content" class="container-fluid" style="overflow:hidden;">
   		<!-- group_div start -->
   		<div id="group_div">
 			<div class="widget-header">
@@ -37,13 +37,13 @@
 							筛选：<input id="group_info"/>
 						</div>
 						<div id="group_grid_data">
-							<table id="group_list"></table>
+							<table id="group_list" ></table>
 						</div>
-						<div id="group_grid_input" style="border:1px blue solid;margin-top:5px;">
+						<div id="group_grid_input" style="border:0px blue solid;margin-top:5px;">
 							
 						</div>
 					</div>
-					<div id="group_btn" align="right" style="float:left;border:1px red solid;margin-left:5px;">
+					<div id="group_btn" align="right" style="float:left;border:0px red solid;margin-left:5px;">
 						<button id="group_btn_add" class="btn btn-sm btn-primary" type="button" onclick="GU.group_btn_add()" >
 							新增
 						</button>
@@ -75,14 +75,14 @@
 						<div id="admin_qry" style="height:25px;">
 							筛选：<input id="admin_info"/>
 						</div>
-						<div id="admin_grid_data" style="margin-top:5px;">
-							<table id="admin_list"></table>
+						<div id="admin_grid_data" style="margin-top:5px;border:0px red solid">
+							<table id="admin_list" style="border:0px blue solid;"></table>
 						</div>
-						<div id="admin_grid_input" style="border:1px blue solid;margin-top:5px;">
+						<div id="admin_grid_input" style="border:0px blue solid;margin-top:5px;">
 						
 						</div>
 					</div>
-					<div id="admin_btn" align="right" style="float:left;border:1px red solid;margin-left:5px;">
+					<div id="admin_btn" align="right" style="float:left;border:0px red solid;margin-left:5px;">
 						<button id="admin_btn_add" class="btn btn-sm btn-primary" type="button" onclick="GU.admin_btn_add()" >
 							新增
 						</button>
