@@ -104,7 +104,7 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 		 	}
 		 </style>
 </head>
-<body onload="main.InitLoad();">
+<body class="no-skin" onload="main.InitLoad();">
 	<!-- 页面头部  -->
 	<div id="navbar" class="navbar navbar-default ace-save-state" style="height:95px;">
 		<div class="navbar-container ace-save-state" id="navbar-container" style="height:100%;">

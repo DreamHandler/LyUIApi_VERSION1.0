@@ -38,6 +38,7 @@ public class RegisterCheck extends HttpServlet {
 		        			session.setMaxInactiveInterval(-1);
 //		        			response.sendRedirect("main.jsp");
 //		        			response.sendRedirect("main2.jsp");
+//		        			response.sendRedirect("ace-master-bootstrap-demo/grid.html");
 		        			response.sendRedirect("main3.jsp");
 		        		}else{
 		        			response.sendRedirect("login.jsp");//密码错误

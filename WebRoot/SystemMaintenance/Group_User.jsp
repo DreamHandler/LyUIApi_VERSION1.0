@@ -33,14 +33,21 @@
 			<div class="widget-body">
 				<div id="group_grid" class="widget-main">
 					<div id="nr_grid">
-						<div id="group_qry" style="height:25px;border:0px blue solid;">
-							筛选：<input id="group_info"/>
+						<div id="group_qry">
+							筛选：<input id="group_info" type="text"/>
 						</div>
 						<div id="group_grid_data">
 							<table id="group_list" ></table>
 						</div>
-						<div id="group_grid_input" style="border:0px blue solid;margin-top:5px;">
-							
+						<div id="group_grid_input">
+							<div id="group_middle" class="col-xs-12">
+								<div class="col-xs-6">
+									编码：<input id="group_VascNum" type="text">
+								</div>
+								<div class="col-xs-6">
+									名称：<input id="group_VascName" type="text">
+								</div>
+							</div>
 						</div>
 					</div>
 					<div id="group_btn" align="right" style="float:left;border:0px red solid;margin-left:5px;">
@@ -71,18 +78,35 @@
 			</div>
 			<div class="widget-body">
 				<div id="admin_grid" class="widget-main">
-					<div id="admin_nr_grid" style="float:left;margin:5px;">
-						<div id="admin_qry" style="height:25px;">
-							筛选：<input id="admin_info"/>
+					<div id="admin_nr_grid">
+						<div id="admin_qry">
+							筛选：<input id="admin_info" type="text"/>
 						</div>
-						<div id="admin_grid_data" style="margin-top:5px;border:0px red solid">
-							<table id="admin_list" style="border:0px blue solid;"></table>
+						<div id="admin_grid_data">
+							<table id="admin_list"></table>
 						</div>
-						<div id="admin_grid_input" style="border:0px blue solid;margin-top:5px;">
-						
+						<div id="admin_grid_input">
+							<div id="admin_middle" class="col-xs-12" >
+								<div class="col-xs-4">
+									编码：<input id="admin_VJOBNUM" type="text">
+								</div>
+								<div class="col-xs-4">
+									名称：<input id="admin_VNAME" type="text">
+								</div>
+								<div class="col-xs-4">
+									管理员组：<input id="admin_VascName" type="text">
+									<input id="admin_VascNum" hidden="hidden"/>
+								</div>
+								<div class="col-xs-4">
+									账号：<input id="admin_VascName" type="text">
+								</div>
+								<div class="col-xs-4">
+									密码：<input id="admin_VascName" type="password">
+								</div>
+							</div>
 						</div>
 					</div>
-					<div id="admin_btn" align="right" style="float:left;border:0px red solid;margin-left:5px;">
+					<div id="admin_btn" align="right">
 						<button id="admin_btn_add" class="btn btn-sm btn-primary" type="button" onclick="GU.admin_btn_add()" >
 							新增
 						</button>

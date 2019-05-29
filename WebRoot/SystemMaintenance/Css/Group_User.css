@@ -1,6 +1,6 @@
 /* 主体 */
 #content{
-	padding:0px;border:0px red solid
+	padding:0px;
 }
 /* 管理员组 */
 #group_div{
@@ -15,12 +15,22 @@
 	float:left;margin:5px;
 }
 #group_qry{
-	height:25px;
+	float:left;
 }
 #group_grid_data{
+	float:left;
 	border:1px rgb(225, 225, 225) solid;margin-top:5px;
 }
-
+#group_grid_input{
+	float:left;
+	margin-top:5px;
+}
+#group_middle{
+	padding:0px;
+}
+#group_middle > .col-xs-6{
+	padding:0px;margin-top:5px;
+}
 /* 管理员 */
 #admin_div{
 	float:left;
@@ -30,4 +40,25 @@
 }
 #admin_grid {
 	padding:0px
+}
+#admin_nr_grid{
+	float:left;margin:5px;
+}
+#admin_qry{
+	
+}
+#admin_grid_data{
+	border:1px rgb(225, 225, 225) solid;margin-top:5px;
+}
+#admin_grid_input{
+	margin-top:5px;
+}
+#admin_btn{
+	float:left;margin-left:5px;
+}
+#admin_middle{
+	padding:0px;
+}
+#admin_middle > .col-xs-4{
+	padding:0px;margin-top:5px;
 }
