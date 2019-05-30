@@ -34,7 +34,7 @@
 				<div id="group_grid" class="widget-main">
 					<div id="nr_grid">
 						<div id="group_qry">
-							筛选：<input id="group_info" type="text"/>
+							筛选：<input id="group_info" type="text" onkeyup="GU.QryGroupData()"/>
 						</div>
 						<div id="group_grid_data">
 							<table id="group_list" ></table>
@@ -80,7 +80,7 @@
 				<div id="admin_grid" class="widget-main">
 					<div id="admin_nr_grid">
 						<div id="admin_qry">
-							筛选：<input id="admin_info" type="text"/>
+							筛选：<input id="admin_info" type="text" onkeyup="GU.QryAdminData();"/>
 						</div>
 						<div id="admin_grid_data">
 							<table id="admin_list"></table>
@@ -98,10 +98,10 @@
 									<input id="admin_VascNum" hidden="hidden"/>
 								</div>
 								<div class="col-xs-4">
-									账号：<input id="admin_VascName" type="text">
+									账号：<input id="admin_VUSER" type="text">
 								</div>
 								<div class="col-xs-4">
-									密码：<input id="admin_VascName" type="password">
+									密码：<input id="admin_VPSWD" type="password">
 								</div>
 							</div>
 						</div>
