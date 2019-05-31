@@ -1,8 +1,11 @@
 var Group_User = Class.create();
 Group_User.prototype = Object.extend(new LBase(), {
-	last_group_rowId : 0,   //管理员组选中行号
-	group_VascNum : "",    //管理员选中行的VascNum值
-	last_admin_rowId : 0,  //管理员选中行号
+	last_group_rowId : 1,   //管理员组选中行号
+	group_btn_status : 0,   //管理员组按钮状态
+	group_status : 0,      //管理员组操作状态；0-查询，1-新增，2-修改，3-删除
+	last_admin_rowId : 1,  //管理员选中行号
+	admin_btn_status : 0,   //管理员按钮状态
+	admin_status : 0,      //管理员操作状态；0-查询，1-新增，2-修改，3-删除
 	/**
      * 初始化
      */
@@ -55,23 +58,22 @@ Group_User.prototype = Object.extend(new LBase(), {
 				{name:'VascNum',index:'VascNum', width:60},
 				{name:'VascName',index:'VascName',width:90}
 			],
-			onSelectRow : GU.grid_onSelectRow
+			onSelectRow : GU.group_onSelectRow,
+			beforeSelectRow : GU.grid_disabled
 		});
 		GU.QryGroupData();
 	},
 	/**
 	 * 管理员组行选中
 	 */
-	grid_onSelectRow : function(rowid,status){
-		if(GU.last_group_rowId != rowid){
-			GU.last_group_rowId = rowid;
-			var rowData=jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId);
-			$("#group_VascNum").val(rowData.VascNum);
-			$("#group_VascName").val(rowData.VascName);
-			//查询管理员信息
-			GU.group_VascNum = rowData.VascNum;
-			GU.QryAdminData();
-		}
+	group_onSelectRow : function(rowid,status){
+		GU.last_group_rowId = rowid;
+		GU.group_btn(0);
+		var rowData = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId);
+		$("#group_VascNum").val(rowData.VascNum);
+		$("#group_VascName").val(rowData.VascName);
+		//查询管理员信息
+		GU.QryAdminData();
 	},
 	/**
      * 查询管理员组信息
@@ -91,15 +93,20 @@ Group_User.prototype = Object.extend(new LBase(), {
 			$("#group_list").jqGrid("clearGridData");
 			var nodeJson = XmlToJson(node);
 			$("#group_list").jqGrid('setGridParam',{data:nodeJson}).trigger("reloadGrid");
-			GU.last_group_rowId = 0;
 			if(nodeJson.length > 0) {
-				$("#group_list").jqGrid('setSelection',1,true);
+				if(GU.group_status == 3){ //删除状态
+					GU.last_group_rowId = GU.last_group_rowId==1?GU.last_group_rowId:GU.last_group_rowId-1;
+				}
+				$("#group_list").jqGrid('setSelection',GU.last_group_rowId,true);
 			} else {//清空admin_grid_input数据
 				GU.emptyValue("group_grid_input");
+				GU.group_btn(2);
 				//清空管理员信息
 				GU.emptyValue("admin_grid_input");
 				$("#admin_list").jqGrid("clearGridData");
 			}
+			GU.group_status = 0;
+			GU.info_disabled(false);
 		}
 	},
 	/**
@@ -120,26 +127,27 @@ Group_User.prototype = Object.extend(new LBase(), {
 				{name:'VascName',index:'VascName',width:90,hidden:true},
 				{name:'VPSWD',index:'VPSWD',width:90,hidden:true}
 			],
-			onSelectRow : GU.admin_onSelectRow
+			onSelectRow : GU.admin_onSelectRow,
+			beforeSelectRow : GU.grid_disabled
 		});
 	},
 	/**
 	 * 管理员行选中
 	 */
 	admin_onSelectRow : function(rowid,status){
-		if(GU.last_admin_rowId != rowid){
-			GU.last_admin_rowId = rowid;
-			var rowData=jQuery("#admin_list").jqGrid("getRowData",GU.last_admin_rowId);
-			for(var key in rowData){
-				$("#admin_"+key).val(rowData[key]);
-			}
+		GU.last_admin_rowId = rowid;
+		GU.admin_btn(0);
+		var rowData = jQuery("#admin_list").jqGrid("getRowData",GU.last_admin_rowId);
+		for(var key in rowData){
+			$("#admin_"+key).val(rowData[key]);
 		}
 	},
 	/**
      * 查询管理员信息
      */
 	QryAdminData : function(){
-		var QryJson={"VascNum":GU.group_VascNum,"admin_info":$("#admin_info").val()};
+		var group_VascNum = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId).VascNum;
+		var QryJson={"VascNum":group_VascNum,"admin_info":$("#admin_info").val()};
 		ajaxCall(QryJson,"SystemMaintenance.Group_User","QryAdminData",GU.QryAdminDataHandler,true);
 	},
 	QryAdminDataHandler : function(ajax){
@@ -153,12 +161,17 @@ Group_User.prototype = Object.extend(new LBase(), {
 			$("#admin_list").jqGrid("clearGridData");
 			var nodeJson = XmlToJson(node);
 			$("#admin_list").jqGrid('setGridParam',{data:nodeJson}).trigger("reloadGrid");
-			GU.last_admin_rowId = 0;
 			if(nodeJson.length > 0){
-				$("#admin_list").jqGrid('setSelection',1,true);
+				if(GU.admin_status == 3){ //删除状态
+					GU.last_admin_rowId = GU.last_admin_rowId==1?GU.last_admin_rowId:GU.last_admin_rowId-1;
+				}
+				$("#admin_list").jqGrid('setSelection',GU.last_admin_rowId,true);
 			}else {//清空admin_grid_input数据
 				GU.emptyValue("admin_grid_input");
+				GU.admin_btn(2);
 			}
+			GU.admin_status = 0;
+			GU.info_disabled(false);
 		}
 	},
 	/**
@@ -167,6 +180,310 @@ Group_User.prototype = Object.extend(new LBase(), {
 	emptyValue : function(id){
 		$("#"+ id +" input").each(function(i,n){
 		      $("#"+ n.id).val("");
+	    });
+	},
+	/**
+	 * 管理员组按钮控制
+	 */
+	group_btn : function(flag){
+		GU.group_btn_status = flag;
+		if(GU.group_btn_status == 0){//新增、修改、删除可用，保存、取消不可用
+			$("#group_btn_add,#group_btn_update,#group_btn_delete").each(function(i,n){
+			      n.disabled = false;
+		    });
+			$("#group_btn_save,#group_btn_cancel").each(function(i,n){
+			      n.disabled = true;
+		    });
+		}else if(GU.group_btn_status == 1){//保存、取消可用，新增、修改、删除不可用
+			$("#group_btn_save,#group_btn_cancel").each(function(i,n){
+			      n.disabled = false;
+		    });
+			$("#group_btn_add,#group_btn_update,#group_btn_delete").each(function(i,n){
+			      n.disabled = true;
+		    });
+		}else if(GU.group_btn_status == 2){//新增可用，修改、删除、保存、取消不可用
+			$("#group_btn_add").each(function(i,n){
+			      n.disabled = false;
+		    });
+			$("#group_btn_update,#group_btn_delete,#group_btn_save,#group_btn_cancel").each(function(i,n){
+			      n.disabled = true;
+		    });
+		}
+	},
+	/**
+	 * 管理员按钮控制
+	 */
+	admin_btn : function(flag){
+		GU.admin_btn_status = flag;
+		if(GU.admin_btn_status == 0){//新增、修改、删除可用，保存、取消不可用
+			$("#admin_btn_add,#admin_btn_update,#admin_btn_delete").each(function(i,n){
+			      n.disabled = false;
+		    });
+			$("#admin_btn_save,#admin_btn_cancel").each(function(i,n){
+			      n.disabled = true;
+		    });
+		}else if(GU.admin_btn_status == 1){//保存、取消可用，新增、修改、删除不可用
+			$("#admin_btn_save,#admin_btn_cancel").each(function(i,n){
+			      n.disabled = false;
+		    });
+			$("#admin_btn_add,#admin_btn_update,#admin_btn_delete").each(function(i,n){
+			      n.disabled = true;
+		    });
+		}else if(GU.admin_btn_status == 2){//新增可用，修改、删除、保存、取消不可用
+			$("#admin_btn_add").each(function(i,n){
+			      n.disabled = false;
+		    });
+			$("#admin_btn_update,#admin_btn_delete,#admin_btn_save,#admin_btn_cancel").each(function(i,n){
+			      n.disabled = true;
+		    });
+		}
+	},
+	/**
+	 * 管理员组_按钮组
+	 */
+	group_btn_add : function(){
+		if(!GU.grid_disabled()){
+			return;
+		}
+		GU.group_status = 1;
+		GU.group_btn(1);
+		GU.info_disabled(true);
+		$("#group_VascName").each(function(i,n){
+		      n.disabled = false;
+		      $("#"+n.id).val("")
+	    });
+		//获取管理员组的VascNum的最大值
+		var AllData = $("#group_list").jqGrid("getRowData");
+		var VascNum_max = 0;
+		for(var i=0;i<AllData.length;i++){
+			var VascNum = parseInt(AllData[i].VascNum);
+			if(VascNum > VascNum_max){
+				VascNum_max = VascNum;
+			}
+		}
+		VascNum_max += 1;
+		$("#group_VascNum").val(VascNum_max<10?"0"+VascNum_max:VascNum_max);
+		$("#group_VascName").focus();
+	},
+	group_btn_update : function(){
+		if(!GU.grid_disabled()){
+			return;
+		}
+		GU.group_status = 2;
+		GU.group_btn(1);
+		GU.info_disabled(true);
+		$("#group_VascName").each(function(i,n){
+		      n.disabled = false;
+	    });
+		$("#group_VascName").select();
+	},
+	group_btn_delete : function(){
+		GU.group_status = 3;
+		if(!GU.grid_disabled()){
+			return;
+		}
+		var VascNum = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId).VascNum;
+		var QryJson={"VascNum":VascNum};
+		ajaxCall(QryJson,"SystemMaintenance.Group_User","DeleteGroupData",GU.group_btn_delete_handler,true);
+	},
+	group_btn_delete_handler : function(){
+		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
+			var response = xmlObject;
+			var node = response.responseXML.documentElement;
+			if(node==null||node.xml===undefined){
+				node = StrToXml(response.responseText);
+			}
+			if(node.selectSingleNode("RES/DAT").text=="1"){
+				alert("删除成功！");
+				GU.group_btn_cancel();
+			}else{
+				alert("删除失败！");
+			}
+		}
+	},
+	group_btn_save : function(){
+		var QryJson={"status":GU.group_status,"VascNum":$("#group_VascNum").val(),
+					"VascName":$("#group_VascName").val()};
+		ajaxCall(QryJson,"SystemMaintenance.Group_User","SaveGroupData",GU.group_btn_save_handler,true);
+	},
+	group_btn_save_handler : function(){
+		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
+			var response = xmlObject;
+			var node = response.responseXML.documentElement;
+			if(node==null||node.xml===undefined){
+				node = StrToXml(response.responseText);
+			}
+			if(node.selectSingleNode("RES/DAT").text=="1"){
+				alert("保存成功！");
+				GU.group_btn_cancel();
+			}else{
+				alert("保存失败！");
+			}
+		}
+	},
+	group_btn_cancel : function(){
+		GU.QryGroupData();
+		$("#group_VascNum,#group_VascName").each(function(i,n){
+		      n.disabled = true;
+	    });
+	},
+	/**
+	 * 管理员_按钮组
+	 */
+	admin_btn_add : function(){
+		if(!GU.grid_disabled()){
+			return;
+		}
+		GU.admin_status = 1;
+		GU.admin_btn(1);
+		GU.info_disabled(true);
+		$("#admin_VJOBNUM,#admin_VNAME,#admin_VUSER,#admin_VPSWD").each(function(i,n){
+		      n.disabled = false;
+		      $("#"+n.id).val("");
+	    });
+		
+		var AllData = $("#group_list").jqGrid("getRowData");
+		if(AllData.length != undefined && AllData.length != 0){ //如果有管理员组选中，管理员新增的默认为该组的，否则自己选择管理员组
+			var VascNum = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId).VascNum;
+			var VascName = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId).VascName;
+			$("#admin_VascNum").val(VascNum);
+			$("#admin_VascName").val(VascName);
+		}else {
+			$("#admin_VascName").each(function(i,n){
+			      n.disabled = false;
+			      $("#"+n.id).val("");
+		    });
+		}
+		$("#admin_VJOBNUM").focus();
+	},
+	admin_btn_update : function(){
+		if(!GU.grid_disabled()){
+			return;
+		}
+		GU.admin_status = 2;
+		GU.admin_btn(1);
+		GU.info_disabled(true);
+		$("#admin_VNAME,#admin_VascName,#admin_VUSER,#admin_VPSWD").each(function(i,n){
+		      n.disabled = false;
+	    });
+		$("#admin_VNAME").select();
+	},
+	admin_btn_delete : function(){
+//		$.YxDialog.error("111");
+//		$.YxDialog.confirm("确认删除管理员【1】？","确认删除",function(bool){
+//			if(!bool){
+//				return;
+//			}
+//		});
+		GU.admin_status = 3;
+		if(!GU.grid_disabled()){
+			return;
+		}
+		var VJOBNUM = jQuery("#admin_list").jqGrid("getRowData",GU.last_admin_rowId).VJOBNUM;
+		var VascNum = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId).VascNum;
+		var QryJson={"VJOBNUM":VJOBNUM,"VascNum":VascNum};
+		ajaxCall(QryJson,"SystemMaintenance.Group_User","DeleteAdminData",GU.admin_btn_delete_handler,true);
+	},
+	admin_btn_delete_handler : function(){
+		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
+			var response = xmlObject;
+			var node = response.responseXML.documentElement;
+			if(node==null||node.xml===undefined){
+				node = StrToXml(response.responseText);
+			}
+			if(node.selectSingleNode("RES/DAT").text=="1"){
+				alert("删除成功！");
+				GU.admin_btn_cancel();
+			}else{
+				alert("删除失败！");
+			}
+		}
+	},
+	admin_btn_save : function(){
+		var bool = true;
+		$("#admin_VJOBNUM,#admin_VNAME,#admin_VUSER,#admin_VPSWD").each(function(i,n){
+			var value = $("#"+n.id).val();
+			if(value == "" || value == null ||  value == undefined){
+				var name = $("#"+n.id).attr("name");
+				alert("【"+name+"】不能为空，请输入！");
+				$("#"+n.id).focus();
+				bool = false;
+				return false;
+			}
+	    });
+		if(!bool){
+			return;
+		}
+		var VascNum = $("#admin_VascNum").val();
+		if(VascNum == "" || VascNum == null || VascNum == undefined){
+			alert("请为管理员选择合适的分组！");
+			$("#admin_VascName").val("");
+			$("#admin_VascName").focus();
+			return;
+		}
+		var QryJson={"status":GU.admin_status,"VJOBNUM":$("#admin_VJOBNUM").val(),
+					"VNAME":$("#admin_VNAME").val(),"VascNum":VascNum,
+					"VascName":$("#admin_VascName").val(),"VUSER":$("#admin_VUSER").val(),
+					"VPSWD":$("#admin_VPSWD").val()};
+		ajaxCall(QryJson,"SystemMaintenance.Group_User","SaveAdminData",GU.admin_btn_save_handler,true);
+	},
+	admin_btn_save_handler : function(){
+		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
+			var response = xmlObject;
+			var node = response.responseXML.documentElement;
+			if(node==null||node.xml===undefined){
+				node = StrToXml(response.responseText);
+			}
+			if(node.selectSingleNode("RES/DAT").text=="1"){
+				alert("保存成功！");
+				GU.admin_btn_cancel();
+			}else{
+				alert("保存失败！");
+			}
+		}
+	},
+	admin_btn_cancel : function(){
+		GU.QryAdminData();
+		$("#admin_VJOBNUM,#admin_VNAME,#admin_VascName,#admin_VUSER,#admin_VPSWD").each(function(i,n){
+		      n.disabled = true;
+	    });
+	},
+	/**
+	 * 禁止对grid进行操作
+	 */
+	grid_disabled : function(rowid,e){
+		if(GU.group_status == 1){
+			alert("请先保存或者取消对管理员组的操作！")
+			$("#group_VascName").focus();
+			return false;
+		}else if(GU.group_status == 2){
+			alert("请先保存或者取消对管理员组的操作！")
+			$("#group_VascName").select();
+			return false;
+		}else if(GU.admin_status == 1){
+			alert("请先保存或者取消对管理员的操作！")
+			$("#admin_VJOBNUM").focus();
+			return false;
+		}else if(GU.admin_status == 2){
+			alert("请先保存或者取消对管理员的操作！")
+			$("#admin_VNAME").select();
+			return false;
+		}else{
+			return true;
+		}
+	},
+	/**
+	 * 获取管理员组ep
+	 */
+	getEpBox : function(aThis){
+		getEpBox(aThis,{epName:'TBGROUP',epJson:[{id:'admin_VascName',value:1},{id:'admin_VascNum',value:0}]});
+	},
+	/**
+	 * 筛选可用设置
+	 */
+	info_disabled : function(bool){
+		$("#group_info,#admin_info").each(function(i,n){
+		      n.disabled = bool;
 	    });
 	}
 });

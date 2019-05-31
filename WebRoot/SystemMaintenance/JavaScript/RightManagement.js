@@ -1,9 +1,10 @@
 var RightManagement = Class.create();
 RightManagement.prototype = Object.extend(new LBase(), {
-	setting : {},
-	IPARENTID : "",
-	id : "",
-	MenuSetting : {},
+	setting : {}, //管理员组和管理员ztree的配置
+	IPARENTID : "",//管理员组和管理员ztree选中节点的父节点id
+	id : "",  //管理员组和管理员ztree选中节点id
+	MenuSetting : {}, //菜单ztree的配置
+	first_id : "", //管理员组和管理员ztree的第一个节点id
 	/**
      * 初始化
      */
@@ -166,7 +167,6 @@ RightManagement.prototype = Object.extend(new LBase(), {
 	/**
      * 将xml转化为json，标准数据模式
      */
-	first_id : "",
 	xmlToJson : function(node){
 		var FieldsValue = node.documentElement.selectSingleNode("FieldsValue").childNodes;
 		var VascNum = "";
@@ -209,7 +209,7 @@ RightManagement.prototype = Object.extend(new LBase(), {
 	/**
      * 未分配系统选中
      */
-	noUse_system_index : "",
+	noUse_system_index : "",  //未分配系统选中的index
 	noUse_system_change : function(obj){
 		RM.toButton_System(1);
 		RM.noUse_system_index = obj.selectedIndex;
@@ -258,8 +258,8 @@ RightManagement.prototype = Object.extend(new LBase(), {
 	/**
      * 已分配系统点击
      */
-	Use_SYSNO : "",
-	Use_system_index : "",
+	Use_SYSNO : "", //已分配系统选中的系统编码
+	Use_system_index : "", //已分配系统选中的index
 	Use_system_change : function(obj){
 		RM.toButton_System(2);
 		RM.Use_system_index = obj.selectedIndex;
@@ -388,6 +388,7 @@ RightManagement.prototype = Object.extend(new LBase(), {
 			$("#btn_right_all").each(function(i, n) {n.disabled = true;});
 		}
 		if(Use_system_obj.options.length > 0){
+			//不开通 将已分配系统全部修改为未分配系统  的功能；避免操作失误，影响数据及使用
 //			$("#btn_left_all").each(function(i, n) {n.disabled = false;});
 		}
 	},
@@ -488,7 +489,7 @@ RightManagement.prototype = Object.extend(new LBase(), {
 	/**
      * 权限_按钮组
      */
-	qx_btn_flag : 0,
+	qx_btn_flag : 0, //按钮组状态，0-查询，1-修改
 	qx_btn_update  : function(){
 		RM.qx_btn_flag = 1;
 		RM.toButton_qx(1);

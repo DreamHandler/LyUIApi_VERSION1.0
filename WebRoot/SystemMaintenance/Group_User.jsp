@@ -17,6 +17,9 @@
 	<script type="text/javascript">
 		InitComprise(ModuleUrl+"bootstrap/js/jquery.jqGrid.js");
 		InitComprise(ModuleUrl+"Loading/Loading.js");//Loading.js效果不佳，弹出框效果不好
+		InitComprise(ModuleUrl+"EpBox/EpBox.js"); //ep出现的位置还需要进一步验证计算方式，容易超出界面范围
+		InitComprise(ModuleUrl+"Dialog/LyDialog.js"); //无效
+		InitComprise(ModuleUrl+"Dialog/jQDialog.js"); 
 		InitComprise("SystemMaintenance/JavaScript/Group_User.js");
 		InitCompriseCss("SystemMaintenance/Css/Group_User.css");
 	</script>
@@ -42,10 +45,10 @@
 						<div id="group_grid_input">
 							<div id="group_middle" class="col-xs-12">
 								<div class="col-xs-6">
-									编码：<input id="group_VascNum" type="text">
+									编码：<input id="group_VascNum" type="text" disabled>
 								</div>
 								<div class="col-xs-6">
-									名称：<input id="group_VascName" type="text">
+									名称：<input id="group_VascName" type="text" disabled>
 								</div>
 							</div>
 						</div>
@@ -88,20 +91,20 @@
 						<div id="admin_grid_input">
 							<div id="admin_middle" class="col-xs-12" >
 								<div class="col-xs-4">
-									编码：<input id="admin_VJOBNUM" type="text">
+									编码：<input id="admin_VJOBNUM" name="编码" type="text" disabled>
 								</div>
 								<div class="col-xs-4">
-									名称：<input id="admin_VNAME" type="text">
+									名称：<input id="admin_VNAME" name="名称" type="text" disabled>
 								</div>
 								<div class="col-xs-4">
-									管理员组：<input id="admin_VascName" type="text">
+									管理员组：<input id="admin_VascName" type="text" onfocus="GU.getEpBox(this)" disabled>
 									<input id="admin_VascNum" hidden="hidden"/>
 								</div>
 								<div class="col-xs-4">
-									账号：<input id="admin_VUSER" type="text">
+									账号：<input id="admin_VUSER" name="账号" type="text" disabled>
 								</div>
 								<div class="col-xs-4">
-									密码：<input id="admin_VPSWD" type="password">
+									密码：<input id="admin_VPSWD" name="密码" type="password" disabled>
 								</div>
 							</div>
 						</div>
