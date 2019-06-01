@@ -2,7 +2,7 @@ var EpBoxTest = Class.create();
 EpBoxTest.prototype = Object.extend(new LBase(), {
 	//初始化
 	initLoad : function(){
-		ep.LoadData();
+//		ep.LoadData();
 	},
 	//前后台交互
 	LoadData : function(){

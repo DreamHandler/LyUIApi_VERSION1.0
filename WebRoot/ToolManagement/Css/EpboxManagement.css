@@ -1,0 +1,70 @@
+/* 主体 */
+#content{
+	padding:0px;
+}
+/* 系统 */
+#Epbox_div{
+	float:left;
+	width:35%;
+	padding:0px;margin:5px;
+}
+#Epbox_grid {
+	padding:0px
+}
+#nr_grid{
+	float:left;margin:5px;
+}
+#Epbox_qry{
+	float:left;
+}
+#Epbox_grid_data{
+	float:left;
+	border:1px rgb(225, 225, 225) solid;margin-top:5px;
+}
+#Epbox_btn{
+	float:left;margin-left:5px;
+}
+/* 菜单 */
+#Epbox_input_div{
+	float:left;
+	padding:0px;
+	margin:5px;
+	margin-left:0px;
+}
+#Epbox_main {
+	padding:0px
+}
+#Epbox_content{
+	float:left;border:0px red solid;margin:5px;
+}
+#Epbox_input{
+	padding:0px;
+}
+#Epbox_input > .col-xs-12{
+	margin-top:15px;
+}
+.input_name{
+	float:left;
+	width:80px;
+	text-align:right;
+	margin-top:4px;
+	border:0px red solid
+}
+.info_input{
+	float:left;
+}
+.info_explain{
+	float:left;
+	color:red;
+	margin-top:4px;
+	margin-left:15px;
+}
+#Epbox_input textarea{
+	height:80px;
+	background:rgb(238, 238, 238);
+}
+.radio_div{
+	padding:0px;
+	padding-top:4px;
+	text-align:center;
+}

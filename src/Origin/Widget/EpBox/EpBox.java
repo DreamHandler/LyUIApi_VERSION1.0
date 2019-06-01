@@ -18,9 +18,9 @@ public class EpBox extends Busy{
 		Element Aele = inEle.getRootElement().element("ASK");
 		String where = "";
 		if(Aele.attributeValue("EpName")!=null){
-			where += " and CDYMC = '"+Aele.attributeValue("EpName")+"'";
+			where += " and VDYMC = '"+Aele.attributeValue("EpName")+"'";
 		}
-		String SQL = "SELECT CDYMC,CVALUE,IXS,CZWBT,CZDMC,CLKD FROM BASEMENT..TBJZDYB WITH(NOLOCK) WHERE BTATUS = 1 "+where;
+		String SQL = "SELECT VDYMC,VVALUE,IXS,VZWBT,VZDMC,VLKD FROM BASEMENT..TBEPBOX WITH(NOLOCK) WHERE BTATUS = 1 "+where;
 		Document doc = null;
 		Document document = null;
 		try {
@@ -33,9 +33,9 @@ public class EpBox extends Busy{
 				document = DocumentHelper.createDocument();
 				Element rsElement = document.addElement("xml");
 				Element fields = rsElement.addElement("Fields");
-				String [] Name = def.getCZWBT().split("\\|");
-				String [] ColWidth = def.getCLKD().split("\\|");
-				String [] ColName = def.getCZDMC().split("\\|");
+				String [] Name = def.getVZWBT().split("\\|");
+				String [] ColWidth = def.getVLKD().split("\\|");
+				String [] ColName = def.getVZDMC().split("\\|");
 				for (int i = 0; i < Name.length; i++) {
 					Element field = fields.addElement("Field");
 					field.addAttribute("name", Name[i]);
@@ -43,7 +43,7 @@ public class EpBox extends Busy{
 					field.addAttribute("ColName",ColName[i]);
 				}
 				//获取ep查询信息
-				Document docs = this.ServireSQL(BaseServire.SysQuer,def.getCVALUE(),null,inopr);
+				Document docs = this.ServireSQL(BaseServire.SysQuer,def.getVVALUE(),null,inopr);
 				Element Rows = rsElement.addElement("Rows");
 				//解析ep中SQL查询结果
 				List<Element> docsRootEles = docs.getRootElement().element("FieldsValue").elements();
@@ -55,7 +55,7 @@ public class EpBox extends Busy{
 						Row.addAttribute(zdmc, val);
 					}
 				}
-				EpBoxList.put(CheckString(RootEles.get(0),"CDYMC"), document);
+				EpBoxList.put(CheckString(RootEles.get(0),"VDYMC"), document);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,11 +69,11 @@ public class EpBox extends Busy{
 	 */
 	private static TEpDef ReadData(Element RootEle) throws Exception {
 		TEpDef EpDef = new TEpDef();
-		EpDef.setCDYMC(CheckString(RootEle, "CDYMC"));
-		EpDef.setCLKD(CheckString(RootEle, "CLKD"));
-		EpDef.setCVALUE(CheckString(RootEle, "CVALUE"));
-		EpDef.setCZDMC(CheckString(RootEle, "CZDMC"));
-		EpDef.setCZWBT(CheckString(RootEle, "CZWBT"));
+		EpDef.setVDYMC(CheckString(RootEle, "VDYMC"));
+		EpDef.setVLKD(CheckString(RootEle, "VLKD"));
+		EpDef.setVVALUE(CheckString(RootEle, "VVALUE"));
+		EpDef.setVZDMC(CheckString(RootEle, "VZDMC"));
+		EpDef.setVZWBT(CheckString(RootEle, "VZWBT"));
 		EpDef.setIXS(CheckInt(RootEle,"IXS"));
 		return EpDef;
 	}

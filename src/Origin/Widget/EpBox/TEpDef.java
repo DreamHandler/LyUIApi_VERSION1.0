@@ -2,23 +2,23 @@ package Origin.Widget.EpBox;
 
 public class TEpDef {
 
-	private String CDYMC;  //对应名称  js通过该字段获取ep信息
-	private String CVALUE; //ep的查询sql
+	private String VDYMC;  //对应名称  js通过该字段获取ep信息
+	private String VVALUE; //ep的查询sql
 	private int IXS;  //
-	private String CZWBT;  //
-	private String CZDMC;  //列的字段名称
-	private String CLKD;  //列的宽度
-	public String getCDYMC() {
-		return CDYMC;
+	private String VZWBT;  //
+	private String VZDMC;  //列的字段名称
+	private String VLKD;  //列的宽度
+	public String getVDYMC() {
+		return VDYMC;
 	}
-	public void setCDYMC(String cDYMC) {
-		CDYMC = cDYMC;
+	public void setVDYMC(String vDYMC) {
+		VDYMC = vDYMC;
 	}
-	public String getCVALUE() {
-		return CVALUE;
+	public String getVVALUE() {
+		return VVALUE;
 	}
-	public void setCVALUE(String cVALUE) {
-		CVALUE = cVALUE;
+	public void setVVALUE(String vVALUE) {
+		VVALUE = vVALUE;
 	}
 	public int getIXS() {
 		return IXS;
@@ -26,24 +26,25 @@ public class TEpDef {
 	public void setIXS(int iXS) {
 		IXS = iXS;
 	}
-	public String getCZWBT() {
-		return CZWBT;
+	public String getVZWBT() {
+		return VZWBT;
 	}
-	public void setCZWBT(String cZWBT) {
-		CZWBT = cZWBT;
+	public void setVZWBT(String vZWBT) {
+		VZWBT = vZWBT;
 	}
-	public String getCZDMC() {
-		return CZDMC;
+	public String getVZDMC() {
+		return VZDMC;
 	}
-	public void setCZDMC(String cZDMC) {
-		CZDMC = cZDMC;
+	public void setVZDMC(String vZDMC) {
+		VZDMC = vZDMC;
 	}
-	public String getCLKD() {
-		return CLKD;
+	public String getVLKD() {
+		return VLKD;
 	}
-	public void setCLKD(String cLKD) {
-		CLKD = cLKD;
+	public void setVLKD(String vLKD) {
+		VLKD = vLKD;
 	}
+	
 	
 	
 }
