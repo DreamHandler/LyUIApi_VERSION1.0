@@ -1,0 +1,61 @@
+/* 主体 */
+#content{
+	padding:0px;
+}
+/* 系统 */
+#system_div{
+	float:left;
+	width:35%;
+	padding:0px;margin:5px;
+}
+#system_grid {
+	padding:0px
+}
+#nr_grid{
+	float:left;margin:5px;
+}
+#system_qry{
+	float:left;
+}
+#system_grid_data{
+	float:left;
+	border:1px rgb(225, 225, 225) solid;margin-top:5px;
+}
+#system_grid_input{
+	float:left;
+	margin-top:5px;
+}
+#system_middle{
+	padding:0px;
+}
+#system_middle > .col-xs-6{
+	padding:0px;margin-top:5px;
+}
+#system_btn{
+	float:left;margin-left:5px;
+}
+/* 菜单 */
+#menu_div{
+	float:left;
+	padding:0px;
+	margin:5px;
+	margin-left:0px;
+}
+#menu_main {
+	padding:0px
+}
+#menu_content{
+	float:left;border:0px red solid;margin:5px;
+}
+#menu_tree{
+	float:left;overflow:auto;border:0px blue solid;
+}
+#menu_input{
+	float:left;margin-left:5px;border:1px rgb(225, 225, 225) solid;
+}
+#menu_input > .col-xs-12{
+	padding:0px;margin-top:15px;margin-left:10px;
+}
+#menu_btn{
+	float:left;border:0px green solid;margin-left:5px;
+}

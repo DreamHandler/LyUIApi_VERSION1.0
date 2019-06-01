@@ -16,7 +16,6 @@
 	<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 	<script type="text/javascript">
 		InitComprise(ModuleUrl+"bootstrap/js/jquery.jqGrid.js");
-		InitComprise(ModuleUrl+"Loading/Loading.js");//Loading.js效果不佳，弹出框效果不好
 		InitComprise(ModuleUrl+"EpBox/EpBox.js"); //ep出现的位置还需要进一步验证计算方式，容易超出界面范围
 		InitComprise(ModuleUrl+"Dialog/LyDialog.js"); //无效
 		InitComprise(ModuleUrl+"Dialog/jQDialog.js"); 
@@ -53,7 +52,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="group_btn" align="right" style="float:left;border:0px red solid;margin-left:5px;">
+					<div id="group_btn" align="right">
 						<button id="group_btn_add" class="btn btn-sm btn-primary" type="button" onclick="GU.group_btn_add()" >
 							新增
 						</button>

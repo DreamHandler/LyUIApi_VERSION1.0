@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 	<script type="text/javascript">
 		InitComprise(ModuleUrl+"Tree/zTree.js");
-		InitComprise(ModuleUrl+"Loading/Loading.js");//Loading.js效果不佳，弹出框效果不好
+		InitComprise(ModuleUrl+"Loading/Loading.js");//Loading.js效果不佳，时间间隔太短
 		InitComprise("SystemMaintenance/JavaScript/RightManagement.js");
 		InitCompriseCss("SystemMaintenance/Css/RightManagement.css");
 	</script>

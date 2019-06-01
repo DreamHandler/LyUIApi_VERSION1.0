@@ -31,6 +31,9 @@
 #group_middle > .col-xs-6{
 	padding:0px;margin-top:5px;
 }
+#group_btn{
+	float:left;margin-left:5px;
+} 
 /* ¹ÜÀíÔ± */
 #admin_div{
 	float:left;
@@ -53,12 +56,12 @@
 #admin_grid_input{
 	margin-top:5px;
 }
-#admin_btn{
-	float:left;margin-left:5px;
-}
 #admin_middle{
 	padding:0px;
 }
 #admin_middle > .col-xs-4{
 	padding:0px;margin-top:5px;
+}
+#admin_btn{
+	float:left;margin-left:5px;
 }
