@@ -73,7 +73,7 @@
 							<div class="col-xs-12">
 								<div class="input_name">ep名称：</div>
 								<div class="info_input">
-									<input id="Epbox_VDYMC" class="input_width" type="text" disabled>
+									<input id="Epbox_VDYMC" name="ep名称" class="input_width" type="text" disabled>
 								</div>
 								<div class="info_explain">
 									*ep名称,业务系统使用控件时的识别码，不可修改
@@ -82,7 +82,7 @@
 							<div class="col-xs-12">
 								<div class="input_name">查询SQL：</div>
 								<div class="info_input">
-									<textarea id="Epbox_VVALUE" class="input_width" disabled="disabled"></textarea>
+									<textarea id="Epbox_VVALUE" name="查询SQL" class="input_width" disabled="disabled"></textarea>
 								</div>
 								<div class="info_explain">
 									*ep控件数据来源
@@ -95,28 +95,28 @@
 							<div class="col-xs-12">
 								<div class="input_name">中文表头：</div>
 								<div class="info_input">
-									<input id="Epbox_VZWBT" class="input_width" type="text" disabled>
+									<input id="Epbox_VZWBT" name="中文表头" class="input_width" type="text" disabled>
 								</div>
 								<div class="info_explain">
-									*ep控件中文表头
+									*ep控件中文表头，用“|”分隔；如：编号|操作员|拼音码
 								</div>
 							</div>
 							<div class="col-xs-12">
 								<div class="input_name">字段名称：</div>
 								<div class="info_input">
-									<input id="Epbox_VZDMC" class="input_width" type="text" disabled>
+									<input id="Epbox_VZDMC" name="字段名称" class="input_width" type="text" disabled>
 								</div>
 								<div class="info_explain">
-									*ep控件数据对应的字段名称
+									*ep控件数据字段名称，用“|”分隔；如：CBM|CMC|CPYM
 								</div>
 							</div>
 							<div class="col-xs-12">
 								<div class="input_name">列宽度：</div>
 								<div class="info_input">
-									<input id="Epbox_VLKD" class="input_width" type="text" disabled>
+									<input id="Epbox_VLKD"  name="列宽度" class="input_width" type="text" disabled>
 								</div>
 								<div class="info_explain">
-									*ep控件数据显示的列宽度
+									*ep控件数据显示的列宽度，用“|”分隔；如：80|80|80
 								</div>
 							</div>
 							<div class="col-xs-12">
@@ -125,12 +125,12 @@
 									<div id="BTATUS_radio">
 										<div class="col-xs-6 radio_div">
 											<label>
-												<input id="Epbox_BTATUS1" name="Epbox_BTATUS" type="radio" disabled>可用
+												<input id="Epbox_BTATUS1" value="1" name="Epbox_BTATUS" type="radio" checked disabled>可用
 											</label>
 										</div>
 										<div class="col-xs-6 radio_div">
 											<label>
-												<input id="Epbox_BTATUS2" name="Epbox_BTATUS" type="radio" disabled>不可用
+												<input id="Epbox_BTATUS2" value="0" name="Epbox_BTATUS" type="radio" disabled>不可用
 											</label>
 										</div>
 									</div>
@@ -151,19 +151,19 @@
 						</div>
 					</div>
 					<div id="Epbox_btn" align="right">
-						<button id="Epbox_btn_add" class="btn btn-sm btn-primary" type="button" onclick="SM.Epbox_btn_add()" >
+						<button id="Epbox_btn_add" class="btn btn-sm btn-primary" type="button" onclick="EpM.Epbox_btn_add()" >
 							新增
 						</button>
-						<button id="Epbox_btn_update" class="btn btn-sm btn-primary" type="button" onclick="SM.Epbox_btn_update()" >
+						<button id="Epbox_btn_update" class="btn btn-sm btn-primary" type="button" onclick="EpM.Epbox_btn_update()" >
 							修改
 						</button>
-						<button id="Epbox_btn_delete" class="btn btn-sm btn-primary" type="button" onclick="SM.Epbox_btn_delete()" >
+						<button id="Epbox_btn_delete" class="btn btn-sm btn-primary" type="button" onclick="EpM.Epbox_btn_delete()" >
 							删除
 						</button>
-						<button id="Epbox_btn_save" class="btn btn-sm btn-primary" type="button" onclick="SM.Epbox_btn_save()" >
+						<button id="Epbox_btn_save" class="btn btn-sm btn-primary" type="button" onclick="EpM.Epbox_btn_save()" >
 							 保存
 						</button>
-						<button id="Epbox_btn_cancel" class="btn btn-sm btn-primary" type="button" onclick="SM.Epbox_btn_cancel()" >
+						<button id="Epbox_btn_cancel" class="btn btn-sm btn-primary" type="button" onclick="EpM.Epbox_btn_cancel()" >
 							取消
 						</button>
 					</div>

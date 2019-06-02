@@ -51,19 +51,36 @@ public class EpboxManagement extends Busy{
 	public String SaveEpboxData(Document inEle, Aperator inopr) throws Exception{
 		Element Aele = inEle.getRootElement().element("ASK");
 		String status = Aele.attributeValue("status");
-		String VSYSNO = Aele.attributeValue("VSYSNO");
-		String VNAME = Aele.attributeValue("VNAME");
+		String VBM = Aele.attributeValue("VBM");
+		String VMC = Aele.attributeValue("VMC");
+		String VDYMC = Aele.attributeValue("VDYMC");
+		String VVALUE = Aele.attributeValue("VVALUE");
+		String VZWBT = Aele.attributeValue("VZWBT");
+		String VZDMC = Aele.attributeValue("VZDMC");
+		String VLKD = Aele.attributeValue("VLKD");
+		String VBZ = Aele.attributeValue("VBZ");
+		String BTATUS = Aele.attributeValue("BTATUS");
 		ArrayList<String> list = new ArrayList<String>();
-		list.add(VNAME);
-		list.add(VSYSNO);
+		list.add(VMC);
+		list.add(VDYMC);
+		list.add(VVALUE);
+		list.add(VZWBT);
+		list.add(VZDMC);
+		list.add(VLKD);
+		list.add(VBZ);
+		list.add(BTATUS);
 		Document doc = null;
 	    String SQL = "";
 	    try {
 	    	if("1".equals(status)){ //新增
-	    		SQL += "INSERT INTO BASEMENT..TBLYSYSINFO(VNAME,VSYSNO)"
-	    				+ "VALUES(?,?)";
+	    		String VBM_NEW = VBM; //需修改为流水号功能
+	    		list.add(VBM_NEW);
+	    		SQL += "INSERT INTO BASEMENT..TBEPBOX(VMC,VDYMC,VVALUE,VZWBT,VZDMC,VLKD,VBZ,BTATUS,VBM)"
+	    				+ "VALUES(?,?,?,?,?,?,?,?,?)";
 	    	}else if("2".equals(status)){ //修改
-	    		SQL += "UPDATE BASEMENT..TBLYSYSINFO SET VNAME=? WHERE VSYSNO=?";
+	    		list.add(VBM);
+	    		SQL += "UPDATE BASEMENT..TBEPBOX SET VMC=?,VDYMC=?,VVALUE=?,VZWBT=?,VZDMC=?,VLKD=?,VBZ=?,BTATUS=? "
+	    			 + " WHERE VBM=?";
 	    	}
 	    	doc = ServireSQL(BaseServire.SysModify, SQL, list, inopr);
 	    } catch (Exception e) {
@@ -80,11 +97,11 @@ public class EpboxManagement extends Busy{
 	 */
 	public String DeleteEpboxData(Document inEle, Aperator inopr) throws Exception{
 		Element Aele = inEle.getRootElement().element("ASK");
-		String VSYSNO = Aele.attributeValue("VSYSNO");
+		String VBM = Aele.attributeValue("VBM");
 		Document doc = null;
 	    String SQL = "";
 	    try {
-	    	SQL += "DELETE BASEMENT..TBLYSYSINFO WHERE VSYSNO='"+VSYSNO+"'";
+	    	SQL += "DELETE BASEMENT..TBEPBOX WHERE VBM='"+VBM+"'";
 	    	doc = ServireSQL(BaseServire.SysModify, SQL, null, inopr);
 	    } catch (Exception e) {
 	      e.printStackTrace();

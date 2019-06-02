@@ -64,7 +64,7 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 	 */
 	Epbox_onSelectRow : function(rowid,status){
 		EpM.last_Epbox_rowId = rowid;
-//		EpM.Epbox_btn(0);
+		EpM.Epbox_btn(0);
 		var rowData = jQuery("#Epbox_list").jqGrid("getRowData",EpM.last_Epbox_rowId);
 		for(var key in rowData){
 			$("#Epbox_"+key).val(rowData[key]);
@@ -94,20 +94,25 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 //				}
 				$("#Epbox_list").jqGrid('setSelection',EpM.last_Epbox_rowId,true);
 			} else {//清空数据
-//				EpM.emptyValue("Epbox_grid_input");
-//				EpM.Epbox_btn(2);
+				EpM.emptyValue("Epbox_input");
+				EpM.Epbox_btn(2);
 			}
-//			EpM.Epbox_status = 0;
-//			EpM.info_disabled(false);
+			EpM.Epbox_status = 0;
+			EpM.info_disabled(false);
 		}
 	},
 	/**
 	 * 清空id下的input数据
 	 */
 	emptyValue : function(id){
-		$("#"+ id +" input").each(function(i,n){
+		$("#"+ id +" input[type='text']").each(function(i,n){
 		      $("#"+ n.id).val("");
 	    });
+		$("#"+ id +" textarea").each(function(i,n){
+		      $("#"+ n.id).val("");
+	    });
+		$("#Epbox_BTATUS1")[0].checked = true;
+		$("#Epbox_BTATUS2")[0].checked = false;
 	},
 	/**
 	 * 系统_按钮组控制
@@ -143,26 +148,33 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 		EpM.Epbox_status = 1;
 		EpM.Epbox_btn(1);
 		EpM.info_disabled(true);
-		$("#Epbox_VSYSNO,#Epbox_VNAME").each(function(i,n){
-		      n.disabled = false;
-		      $("#"+n.id).val("")
-	    });
-		$("#Epbox_VSYSNO").focus();
+		EpM.input_disabled("Epbox_input",false);
+		EpM.emptyValue("Epbox_input");
+		//获取epbox的VBM的最大值，修改为流水号功能可以去掉
+		var AllData = $("#Epbox_list").jqGrid("getRowData");
+		var VBM_max = 0;
+		for(var i=0;i<AllData.length;i++){
+			var VBM = parseInt(AllData[i].VBM);
+			if(VBM > VBM_max){
+				VBM_max = VBM;
+			}
+		}
+		VBM_max += 1;
+		$("#Epbox_VBM").val(VBM_max);
+		$("#Epbox_VMC").focus();
 	},
 	Epbox_btn_update : function(){
 		EpM.Epbox_status = 2;
 		EpM.Epbox_btn(1);
 		EpM.info_disabled(true);
-		$("#Epbox_VNAME").each(function(i,n){
-		      n.disabled = false;
-	    });
-		$("#Epbox_VNAME").select();
+		EpM.input_disabled("Epbox_input",false);
+		$("#Epbox_VMC").select();
 	},
 	Epbox_btn_delete : function(){
 		EpM.Epbox_status = 3;
-		var VSYSNO = jQuery("#Epbox_list").jqGrid("getRowData",EpM.last_Epbox_rowId).VSYSNO;
-		var QryJson={"VSYSNO":VSYSNO};
-		ajaxCall(QryJson,"SystemMaintenance.Epbox_Menu","DeleteSystemData",EpM.Epbox_btn_delete_handler,true);
+		var VBM = jQuery("#Epbox_list").jqGrid("getRowData",EpM.last_Epbox_rowId).VBM;
+		var QryJson={"VBM":VBM};
+		ajaxCall(QryJson,"ToolManagement.EpboxManagement","DeleteEpboxData",EpM.Epbox_btn_delete_handler,true);
 	},
 	Epbox_btn_delete_handler : function(){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
@@ -180,25 +192,38 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 		}
 	},
 	Epbox_btn_save : function(){
-		var Epbox_VSYSNO = $("#Epbox_VSYSNO").val();
-		var bool = false;
-		//获取系统的VascNum的最大值
-		var AllData = $("#Epbox_list").jqGrid("getRowData");
-		for(var i=0;i<AllData.length;i++){
-			var VSYSNO = AllData[i].VSYSNO;
-			if(VSYSNO == Epbox_VSYSNO){ //判断新增的系统编码是否存在
-				bool = true;
-				alert("系统编码【"+Epbox_VSYSNO+"】已存在，请重新输入！");
-				$("#Epbox_VSYSNO").select();
-				break;
+		//判断是否填写
+		var bool = true;
+		$("#Epbox_VDYMC,#Epbox_VVALUE,#Epbox_VZWBT,#Epbox_VZDMC,#Epbox_VLKD").each(function(i,n){
+			var value = $("#"+n.id).val();
+			if(value == "" || value == null ||  value == undefined){
+				var name = $("#"+n.id).attr("name");
+				alert("【"+name+"】不能为空，请输入！");
+				$("#"+n.id).focus();
+				bool = false;
+				return false;
 			}
-		}
-		if(bool){
+	    });
+		if(!bool){
 			return;
 		}
-		var QryJson={"status":EpM.Epbox_status,"VSYSNO":$("#Epbox_VSYSNO").val(),
-					"VNAME":$("#Epbox_VNAME").val()};
-		ajaxCall(QryJson,"SystemMaintenance.Epbox_Menu","SaveSystemData",EpM.Epbox_btn_save_handler,true);
+		var VBM = $("#Epbox_VBM").val();
+		var VMC = $("#Epbox_VMC").val();
+		var VDYMC = $("#Epbox_VDYMC").val();
+		var VVALUE = $("#Epbox_VVALUE").val();
+		var VZWBT = $("#Epbox_VZWBT").val();
+		var VZDMC = $("#Epbox_VZDMC").val();
+		var VLKD = $("#Epbox_VLKD").val();
+		var VBZ = $("#Epbox_VBZ").val();
+		var BTATUS = "";
+		$("#BTATUS_radio input[name='Epbox_BTATUS']").each(function(i,n){
+		      if($("#"+n.id)[0].checked){
+		    	  BTATUS = n.value;
+		      }
+	    });
+		var QryJson={"status":EpM.Epbox_status,"VBM":VBM,"VMC":VMC,"VDYMC":VDYMC,"VVALUE":VVALUE,
+                     "VZWBT":VZWBT,"VZDMC":VZDMC,"VLKD":VLKD,"VBZ":VBZ,"BTATUS":BTATUS};
+		ajaxCall(QryJson,"ToolManagement.EpboxManagement","SaveEpboxData",EpM.Epbox_btn_save_handler,true);
 	},
 	Epbox_btn_save_handler : function(){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
@@ -216,10 +241,8 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 		}
 	},
 	Epbox_btn_cancel : function(){
-		EpM.QrySystemData();
-		$("#Epbox_VSYSNO,#Epbox_VNAME").each(function(i,n){
-		      n.disabled = true;
-	    });
+		EpM.QryEpboxData();
+		EpM.input_disabled("Epbox_input",true);
 	},
 	/**
 	 * 筛选可用设置
@@ -227,6 +250,44 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 	info_disabled : function(bool){
 		$("#Epbox_info").each(function(i,n){
 		      n.disabled = bool;
+	    });
+	},
+	/**
+	 * 禁止对grid进行操作
+	 */
+	grid_disabled : function(rowid,e){
+		if(EpM.Epbox_status == 1){
+			alert("请先保存或者取消对epbox的操作！")
+			$("#Epbox_VMC").focus();
+			return false;
+		}else if(EpM.Epbox_status == 2){
+			alert("请先保存或者取消对epbox的操作！")
+			$("#Epbox_VMC").select();
+			return false;
+		}else{
+			return true;
+		}
+	},
+	/**
+	 * 禁止对id下的相关对象进行操作
+	 */
+	input_disabled : function(id,bool){
+		$("#"+ id +" input[type='text']").each(function(i,n){
+			if(n.id != "Epbox_VBM"){
+				n.disabled = bool;
+			}
+			
+	    });
+		$("#"+ id +" textarea").each(function(i,n){
+			n.disabled = bool;
+			if(bool) {
+				$("#"+n.id).css("background","rgb(238, 238, 238)")
+			}else {
+				$("#"+n.id).css("background","rgb(255, 255, 255)")
+			}
+	    });
+		$("#"+ id +" input[type='radio'").each(function(i,n){
+			n.disabled = bool;
 	    });
 	}
 });

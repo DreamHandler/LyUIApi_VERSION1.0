@@ -252,7 +252,7 @@ Group_User.prototype = Object.extend(new LBase(), {
 		      n.disabled = false;
 		      $("#"+n.id).val("")
 	    });
-		//获取管理员组的VascNum的最大值
+		//获取管理员组的VascNum的最大值，修改为流水号功能可以去掉
 		var AllData = $("#group_list").jqGrid("getRowData");
 		var VascNum_max = 0;
 		for(var i=0;i<AllData.length;i++){
@@ -341,7 +341,6 @@ Group_User.prototype = Object.extend(new LBase(), {
 		      n.disabled = false;
 		      $("#"+n.id).val("");
 	    });
-		
 		var AllData = $("#group_list").jqGrid("getRowData");
 		if(AllData.length != undefined && AllData.length != 0){ //如果有管理员组选中，管理员新增的默认为该组的，否则自己选择管理员组
 			var VascNum = jQuery("#group_list").jqGrid("getRowData",GU.last_group_rowId).VascNum;
@@ -414,6 +413,7 @@ Group_User.prototype = Object.extend(new LBase(), {
 		if(!bool){
 			return;
 		}
+		//修改为流水号功能可以去掉
 		var VascNum = $("#admin_VascNum").val();
 		if(VascNum == "" || VascNum == null || VascNum == undefined){
 			alert("请为管理员选择合适的分组！");
