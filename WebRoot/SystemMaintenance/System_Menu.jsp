@@ -87,26 +87,39 @@
 								编码：<input id="menu_VNum" class="input_width" type="text" disabled>
 							</div>
 							<div class="col-xs-12">
-								名称：<input id="menu_VName" class="input_width" type="text" disabled>
+								名称：<input id="menu_VName" class="input_width" type="text" onkeyup="SM.refreshNode(this);" onchange="SM.refreshNode(this);" disabled>
 							</div>
 							<div class="col-xs-12">
-								链接：<input id="menu_VSRC" class="input_width" type="text" disabled>
+								链接：<input id="menu_VSRC" class="input_width" type="text" onkeyup="SM.refreshNode(this);" onchange="SM.refreshNode(this);" disabled>
 							</div>
 							<div class="col-xs-12">
-								图标：<input id="menu_VPIC" class="input_width" type="text" disabled>
+								图标：<input id="menu_VPIC" class="input_width" type="text" onkeyup="SM.refreshNode(this);" onchange="SM.refreshNode(this);" disabled>
 							</div>
 						</div>
 					</div>
-					<div id="menu_btn" align="right">
-						<button id="menu_btn_update" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_update()" >
-							修改
-						</button>
-						<button id="menu_btn_save" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_save()" >
-							 保存
-						</button>
-						<button id="menu_btn_cancel" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_cancel()" >
-							取消
-						</button>
+					<div id="menu_btn">
+						<div id="menu_btn_left" align="left">
+							<button id="menu_btn_add_equal" class="btn btn-sm btn-primary" type="button" onclick="SM.qryMaxVnum(1)" >
+								新增同级
+							</button>
+							<button id="menu_btn_add_lower" class="btn btn-sm btn-primary" type="button" onclick="SM.qryMaxVnum(2)" >
+								 新增下级
+							</button>
+							<button id="menu_btn_delete" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_delete(2)" >
+								 删除菜单
+							</button>
+						</div>
+						<div id="menu_btn_right" align="right">
+							<button id="menu_btn_update" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_update()" >
+								修改
+							</button>
+							<button id="menu_btn_save" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_save()" >
+								 保存
+							</button>
+							<button id="menu_btn_cancel" class="btn btn-sm btn-primary" type="button" onclick="SM.menu_btn_cancel()" >
+								取消
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

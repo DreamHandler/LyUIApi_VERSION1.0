@@ -59,3 +59,9 @@
 #menu_btn{
 	float:left;border:0px green solid;margin-left:5px;
 }
+#menu_btn_left{
+	float:left;
+}
+#menu_btn_right{
+	float:left;
+}

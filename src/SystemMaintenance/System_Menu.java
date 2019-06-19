@@ -14,8 +14,12 @@ import com.model.Aperator;
 import com.util.BaseServire;
 import com.util.Busy;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 
 public class System_Menu extends Busy{
+	private int IXH = 1;  //序号
 	/**
 	 * 获取系统信息
 	 * @param inEle
@@ -78,8 +82,8 @@ public class System_Menu extends Busy{
 	    String SQL = "";
 	    try {
 	    	if("1".equals(status)){ //新增
-	    		SQL += "INSERT INTO BASEMENT..TBLYSYSINFO(VNAME,VSYSNO)"
-	    				+ "VALUES(?,?)";
+	    		SQL += "INSERT INTO BASEMENT..TBLYSYSINFO(VNAME,VSYSNO,BENABLE)"
+	    				+ "VALUES(?,?,1)";
 	    	}else if("2".equals(status)){ //修改
 	    		SQL += "UPDATE BASEMENT..TBLYSYSINFO SET VNAME=? WHERE VSYSNO=?";
 	    	}
@@ -111,6 +115,7 @@ public class System_Menu extends Busy{
 	}
 	/**
 	 * 保存菜单信息
+	 * 先删除，在根据前台ztree信息顺序保存菜单信息：前台ztree可随意调整，数据库信息都是重新保存
 	 * @param inEle
 	 * @param inopr
 	 * @return
@@ -119,18 +124,73 @@ public class System_Menu extends Busy{
 	public String SaveMenuData(Document inEle, Aperator inopr) throws Exception{
 		Element Aele = inEle.getRootElement().element("ASK");
 		String VSYSNO = Aele.attributeValue("VSYSNO");
-		String VNAME = Aele.attributeValue("VNAME");
-		ArrayList<String> list = new ArrayList<String>();
-		list.add(VNAME);
-		list.add(VSYSNO);
+		String nodesStr = Aele.attributeValue("nodes");
 		Document doc = null;
-	    String SQL = "";
+		StringBuffer SQL = new StringBuffer();
+	    SQL.append("DELETE BASEMENT..TBMENU WHERE VXTBM='"+VSYSNO+"' ");
 	    try {
-	    	
-	    	doc = ServireSQL(BaseServire.SysModify, SQL, list, inopr);
+	    	//nodesStr字符串对象转化为json对象
+	    	JSONArray root_jsonArray = JSONArray.fromObject(nodesStr);
+	    	//json对象转化为数组对象
+	    	Object[] root_obj = root_jsonArray .toArray();
+	    	SQL = QryChildData(root_obj[0],0,SQL);
+//	    	System.out.println(SQL.toString());
+	    	doc = ServireSQL(BaseServire.SysModify, SQL.toString(), null, inopr);
 	    } catch (Exception e) {
 	      e.printStackTrace();
 	    }
 	    return doc.asXML();
+	}
+	/**
+	 * 获取菜单信息，并判断有无下级菜单，构成INSERT INTO 重新语句保存菜单信息
+	 * @param childStr
+	 * @param IZH
+	 * @param SQL
+	 * @return
+	 * @throws Exception
+	 */
+	public StringBuffer QryChildData(Object childStr,int IZH,StringBuffer SQL) throws Exception{
+		//nodesStr字符串对象转化为json对象
+    	JSONArray child_jsonArray = JSONArray.fromObject(childStr);
+    	//json对象转化为数组对象
+		Object[] child_obj = child_jsonArray .toArray();
+		for(int i=0; i<child_obj.length; i++) {
+    	    JSONObject jsonObj = JSONObject.fromObject(child_obj[i]);
+    	    String VNum = (jsonObj.get("VNum")==null?"":jsonObj.get("VNum")).toString();
+    	    String VName = (jsonObj.get("VName")==null?"":jsonObj.get("VName")).toString();
+    	    String VXTBM = (jsonObj.get("VXTBM")==null?"":jsonObj.get("VXTBM")).toString();
+    	    String VSRC = (jsonObj.get("VSRC")==null?"":jsonObj.get("VSRC")).toString();
+    	    String VPIC = (jsonObj.get("VPIC")==null?"":jsonObj.get("VPIC")).toString();
+    	    int izh = IXH;
+    	    SQL.append(" INSERT INTO BASEMENT..TBMENU(VNum,VName,IZH,IXH,VXTBM,VSRC,VPIC,BENABLE)")
+    	    	.append(" VALUES('").append(VNum).append("','").append(VName).append("',").append(IZH).append(",")
+    	    	.append(IXH++).append(",'").append(VXTBM).append("','").append(VSRC).append("','")
+    	    	.append(VPIC).append("',1)");
+//    	    System.out.println(VNum+"--"+VName+"--"+VXTBM+"--"+VSRC+"--"+VPIC);
+    	    Object childJson = jsonObj.get("children");
+    	    if(childJson != null){
+    	    	SQL = QryChildData(childJson,izh,SQL);
+    	    }
+    	}
+		return SQL;
+	}
+	/**
+	 * 获取最大菜单编码信息
+	 * @param inEle
+	 * @param inopr
+	 * @return
+	 * @throws Exception
+	 */
+	public String QryMaxVnum(Document inEle, Aperator inopr) throws Exception{
+		Element Aele = inEle.getRootElement().element("ASK");
+		String VSYSNO = Aele.attributeValue("VSYSNO");
+		Document doc = null;
+		String SQL = "SELECT MAX(Vnum)MAX_VNUM FROM BASEMENT..TBMENU WITH(NOLOCK) WHERE 1=1 AND VXTBM='"+VSYSNO+"'";
+		try {
+			doc = this.ServireSQL(BaseServire.SysQuer,SQL,null,inopr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return doc.asXML();
 	}
 }
