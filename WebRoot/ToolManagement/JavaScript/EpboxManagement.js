@@ -75,18 +75,18 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
      */
 	QryEpboxData : function(){
 		var QryJson={"Epbox_info":$("#Epbox_info").val()};
-		ajaxCall(QryJson,"ToolManagement.EpboxManagement","QryEpboxData",EpM.QryEpboxDataHandler,false);
+		EpM.ajaxCall(QryJson,"ToolManagement.EpboxManagement","QryEpboxData",EpM.QryEpboxDataHandler,false);
 	},
 	QryEpboxDataHandler : function(ajax){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
 			var response = xmlObject;
 			var node = response.responseXML.documentElement;
 			if(node==null||node.xml===undefined){
-				node = StrToXml(response.responseText);
+				node = EpM.StrToXml(response.responseText);
 			}
 			//清空系统信息
 			$("#Epbox_list").jqGrid("clearGridData");
-			var nodeJson = XmlToJson(node);
+			var nodeJson = EpM.XmlToJson(node);
 			$("#Epbox_list").jqGrid('setGridParam',{data:nodeJson}).trigger("reloadGrid");
 			if(nodeJson.length > 0) {
 //				if(EpM.Epbox_status == 3){ //删除状态
@@ -174,14 +174,14 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 		EpM.Epbox_status = 3;
 		var VBM = jQuery("#Epbox_list").jqGrid("getRowData",EpM.last_Epbox_rowId).VBM;
 		var QryJson={"VBM":VBM};
-		ajaxCall(QryJson,"ToolManagement.EpboxManagement","DeleteEpboxData",EpM.Epbox_btn_delete_handler,true);
+		EpM.ajaxCall(QryJson,"ToolManagement.EpboxManagement","DeleteEpboxData",EpM.Epbox_btn_delete_handler,true);
 	},
 	Epbox_btn_delete_handler : function(){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
 			var response = xmlObject;
 			var node = response.responseXML.documentElement;
 			if(node==null||node.xml===undefined){
-				node = StrToXml(response.responseText);
+				node = EpM.StrToXml(response.responseText);
 			}
 			if(node.selectSingleNode("RES/DAT").text=="1"){
 				alert("删除成功！");
@@ -223,14 +223,14 @@ EpboxManagement.prototype = Object.extend(new LBase(), {
 	    });
 		var QryJson={"status":EpM.Epbox_status,"VBM":VBM,"VMC":VMC,"VDYMC":VDYMC,"VVALUE":VVALUE,
                      "VZWBT":VZWBT,"VZDMC":VZDMC,"VLKD":VLKD,"VBZ":VBZ,"BTATUS":BTATUS};
-		ajaxCall(QryJson,"ToolManagement.EpboxManagement","SaveEpboxData",EpM.Epbox_btn_save_handler,true);
+		EpM.ajaxCall(QryJson,"ToolManagement.EpboxManagement","SaveEpboxData",EpM.Epbox_btn_save_handler,true);
 	},
 	Epbox_btn_save_handler : function(){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
 			var response = xmlObject;
 			var node = response.responseXML.documentElement;
 			if(node==null||node.xml===undefined){
-				node = StrToXml(response.responseText);
+				node = EpM.StrToXml(response.responseText);
 			}
 			if(node.selectSingleNode("RES/DAT").text=="1"){
 				alert("保存成功！");

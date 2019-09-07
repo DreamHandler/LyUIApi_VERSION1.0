@@ -11,8 +11,8 @@
     <title>EpBox测试demo</title>
 	<script type="text/javascript" src="SysDefUtil/Origin.js"></script>
 	<script type="text/javascript">
-		InitComprise(ModuleUrl+"EpBox/EpBox.js");
-		InitComprise(ModuleUrl+"EpBox/MoreEpBox.js");
+		InitComprise(BassModuleUrl+"EpBox/EpBox.js");
+		InitComprise(BassModuleUrl+"EpBox/MoreEpBox.js");
 		InitComprise("pluginsTest/EpBox/JavaScript/EpBoxTest.js");
 		InitCompriseCss("../LyUIApi/albbsltTest/iconfont.css");
 	</script>

@@ -1,4 +1,5 @@
-var main={
+var Main = Class.create();
+Main.prototype = Object.extend(new LBase(), {
 	recent_tab_width : 0,
 	InitLoad : function(){
 		main.recent_tab_width = $("#recent-tab").width() - $("#li_menu02").width() ;
@@ -176,14 +177,14 @@ var main={
 	},
 	getFirstMenu : function(){
 		var QryJson={};
-		ajaxCall(QryJson,"com.MFuns.MSingleFuns","getFisrtMenu",main.getFirstMenuHander,false);
+		main.ajaxCall(QryJson,"com.MFuns.MSingleFuns","getFisrtMenu",main.getFirstMenuHander,false);
 	},
 	getFirstMenuHander : function(ajax){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
 			var response = xmlObject;
 			var node = response.responseXML.documentElement;
 			if(node==null||node.xml===undefined){
-				node = StrToXml(response.responseText);
+				node = main.StrToXml(response.responseText);
 			}
 //			alert(node.xml)
 			$("#first-menu").html(node.xml);
@@ -191,16 +192,17 @@ var main={
 	},
 	getSubMenu : function(IXH){
 		var QryJson={"IXH":IXH};
-		ajaxCall(QryJson,"com.MFuns.MSingleFuns","getMenu",main.DataHander,false);
+		main.ajaxCall(QryJson,"com.MFuns.MSingleFuns","getMenu",main.DataHander,false);
 	},
 	DataHander : function(ajax){
 		if (xmlObject.readyState == 4 && xmlObject.status == 200) {
 			var response = xmlObject;
 			var node = response.responseXML.documentElement;
 			if(node==null||node.xml===undefined){
-				node = StrToXml(response.responseText);
+				node = main.StrToXml(response.responseText);
 			}
 			$("#sub_menu").html(node.xml);
 		}
 	}
-}
+});
+var main = new Main();

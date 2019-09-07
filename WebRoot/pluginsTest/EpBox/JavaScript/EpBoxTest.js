@@ -24,7 +24,6 @@ EpBoxTest.prototype = Object.extend(new LBase(), {
 		getEpBox(aThis,{epName:'TBGROUP',epJson:[{id:'firstEpBox',value:1},{id:'firstEpBoxBM',value:0}]});
 	},
 	getFirstMoreEpBox : function(aThis){//操作员
-		alert(11)
 		getMoreEpBox(aThis,{epName:'TBUSER',epValue:'CMC',epValue2:'CBM',PYMFilter:true});
 	},
 	getFirstMoreEpBoxBM : function(){

@@ -24,8 +24,10 @@ Aperator apr = (Aperator)Session.getAttribute("opr");
 		
 		
 		<script src="/LyUI/Origin/Widget/bootstrap/js/ace-extra.js"></script>
-		<script src="main/JavaScript/main.js"></script>
+		<script src="main/JavaScript/Main.js"></script>
 		<script type="text/javascript">
+
+			InitCompriseCss(BassModuleUrlB+"css/bootstrap.css");
 			function changeFrameHeight(obj){//自动调整iframe页面尺寸
 				var ifm = document.getElementById(obj.id);
 				var mainmenu = document.getElementById("mainmenu");

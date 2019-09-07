@@ -15,8 +15,8 @@
 	<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/font-awesome/4.5.0/css/font-awesome.css" />
 	<link rel="stylesheet" href="/LyUI/Origin/Widget/bootstrap/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 	<script type="text/javascript">
-		InitComprise(ModuleUrl+"bootstrap/js/jquery.jqGrid.js");
-		InitComprise(ModuleUrl+"Loading/Loading.js");
+		InitComprise(BassModuleUrlB+"js/jquery.jqGrid.js");
+		InitComprise(BassModuleUrl+"Loading/Loading.js");
 		InitComprise("ToolManagement/JavaScript/EpboxManagement.js");
 		InitCompriseCss("ToolManagement/Css/EpboxManagement.css");
 	</script>
