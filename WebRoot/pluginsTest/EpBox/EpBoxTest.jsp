@@ -14,7 +14,7 @@
 		InitComprise(BassModuleUrl+"EpBox/EpBox.js");
 		InitComprise(BassModuleUrl+"EpBox/MoreEpBox.js");
 		InitComprise("pluginsTest/EpBox/JavaScript/EpBoxTest.js");
-		InitCompriseCss("../LyUIApi/albbsltTest/iconfont.css");
+		//InitCompriseCss("../LyUIApi/albbsltTest/iconfont.css");
 	</script>
   </head>
   
